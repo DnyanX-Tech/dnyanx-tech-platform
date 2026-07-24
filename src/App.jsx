@@ -10,6 +10,7 @@ import CodeSandbox from './components/CodeSandbox';
 import ServicesHub from './components/ServicesHub';
 import ClientFlowCRM from './components/ClientFlowCRM';
 import StatusTracker from './components/StatusTracker';
+import SpeedLeaderboard from './components/SpeedLeaderboard';
 import ContactForm from './components/ContactForm';
 import CartModal from './components/CartModal';
 import UpiPaymentModal from './components/UpiPaymentModal';
@@ -260,6 +261,8 @@ export default function App() {
           />
 
           <ClientFlowCRM t={t} />
+
+          <SpeedLeaderboard />
 
           <StatusTracker t={t} />
 
