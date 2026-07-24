@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ShoppingBag, Terminal, ExternalLink, Menu, X, Sparkles, Code, Briefcase, Calculator, MessageSquare, Globe, DollarSign, Download, Users, Activity } from 'lucide-react';
+import { ShoppingBag, Terminal, ExternalLink, Menu, X, Sparkles, Code, Briefcase, Calculator, MessageSquare, Globe, DollarSign, Download, Users, Activity, Utensils, CreditCard, Heart } from 'lucide-react';
 
 export default function Navbar({ 
   cartCount, 
@@ -45,9 +45,12 @@ export default function Navbar({
 
   const navItems = [
     { id: 'hero', label: t.home, icon: Terminal },
+    { id: 'journey', label: 'Founder Journey', icon: Heart },
     { id: 'portfolio', label: t.portfolio, icon: Code },
     { id: 'store', label: t.store, icon: ShoppingBag, badge: 'Hot' },
     { id: 'cardGen', label: t.cardGen, icon: Sparkles },
+    { id: 'qrmenu', label: 'QR Menu Pro', icon: Utensils },
+    { id: 'digicard', label: 'DigiCard Pro', icon: CreditCard },
     { id: 'sandbox', label: t.sandbox, icon: Terminal },
     { id: 'services', label: t.services, icon: Calculator },
     { id: 'crm', label: t.crm, icon: Users },
@@ -65,13 +68,13 @@ export default function Navbar({
   };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'glass-nav py-2.5 shadow-2xl' : 'bg-slate-950/80 backdrop-blur-md py-4'}`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'glass-nav py-2 shadow-2xl' : 'bg-slate-950/80 backdrop-blur-md py-3.5'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         
         {/* Brand Logo */}
         <div 
           onClick={() => handleNavClick('hero')} 
-          className="flex items-center gap-2.5 cursor-pointer group"
+          className="flex items-center gap-2 cursor-pointer group"
         >
           <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-cyan-500 p-0.5 shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform duration-300">
             <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center font-extrabold text-emerald-400 text-xs">
@@ -84,12 +87,12 @@ export default function Navbar({
               <span className="text-gradient">Tech</span>
               <span className="text-xs">🌿</span>
             </div>
-            <p className="text-[9px] text-slate-400 font-mono tracking-wider">DEV PLATFORM</p>
+            <p className="text-[9px] text-slate-400 font-mono tracking-wider">ONE HUMAN. GREEN FUTURE.</p>
           </div>
         </div>
 
         {/* Desktop Nav Items */}
-        <nav className="hidden lg:flex items-center gap-0.5 bg-slate-900/80 p-1 rounded-full border border-slate-800">
+        <nav className="hidden xl:flex items-center gap-0.5 bg-slate-900/80 p-1 rounded-full border border-slate-800">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
@@ -97,7 +100,7 @@ export default function Navbar({
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className={`px-3 py-1.5 rounded-full text-[11px] font-semibold flex items-center gap-1.5 transition-all ${
+                className={`px-2.5 py-1 rounded-full text-[11px] font-semibold flex items-center gap-1 transition-all ${
                   isActive
                     ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/30 font-bold'
                     : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
@@ -135,7 +138,7 @@ export default function Navbar({
           {/* Currency Switcher */}
           <button
             onClick={() => setCurrency(currency === 'USD' ? 'INR' : 'USD')}
-            className="px-2.5 py-1 rounded-xl bg-slate-900 border border-slate-800 text-[11px] font-mono font-bold text-cyan-400 hover:border-cyan-500/40 transition-all flex items-center gap-1"
+            className="px-2 py-1 rounded-xl bg-slate-900 border border-slate-800 text-[11px] font-mono font-bold text-cyan-400 hover:border-cyan-500/40 transition-all flex items-center gap-1"
             title="Toggle Currency ($ USD vs ₹ INR)"
           >
             <span>{currency === 'USD' ? '$ USD' : '₹ INR'}</span>
@@ -168,7 +171,7 @@ export default function Navbar({
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-xl bg-slate-900 text-slate-300 border border-slate-800"
+            className="xl:hidden p-2 rounded-xl bg-slate-900 text-slate-300 border border-slate-800"
           >
             {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
@@ -178,7 +181,7 @@ export default function Navbar({
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden glass-panel mx-4 mt-2 p-3 border border-slate-800 flex flex-col gap-1.5 animate-modal">
+        <div className="xl:hidden glass-panel mx-4 mt-2 p-3 border border-slate-800 flex flex-col gap-1.5 animate-modal">
           {navItems.map((item) => {
             const Icon = item.icon;
             return (

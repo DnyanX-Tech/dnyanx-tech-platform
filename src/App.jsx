@@ -14,7 +14,7 @@ import CartModal from './components/CartModal';
 import UpiPaymentModal from './components/UpiPaymentModal';
 import Footer from './components/Footer';
 
-// WorldFolio X Specification Modules
+// Master Inventory Modules (DevDash 120, WorldFolio X, ClientFlow, QRMenu Pro, DigiCard Pro)
 import AiChatbot from './components/AiChatbot';
 import VoiceController from './components/VoiceController';
 import GithubStatsWidget from './components/GithubStatsWidget';
@@ -24,6 +24,9 @@ import TrustMap from './components/TrustMap';
 import RpgPowerMeter from './components/RpgPowerMeter';
 import AutoBragReel from './components/AutoBragReel';
 import Ar3dCard from './components/Ar3dCard';
+import PersonalJourney from './components/PersonalJourney';
+import QrMenuProTool from './components/QrMenuProTool';
+import DigiCardProTool from './components/DigiCardProTool';
 
 import { TRANSLATIONS } from './data/translations';
 import confetti from 'canvas-confetti';
@@ -33,7 +36,7 @@ export default function App() {
   const [currency, setCurrency] = useState('USD');
   const [theme, setTheme] = useState('dark');
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [xpScore, setXpScore] = useState(350);
+  const [xpScore, setXpScore] = useState(480);
 
   const [activeTab, setActiveTab] = useState('hero');
   const [cartOpen, setCartOpen] = useState(false);
@@ -63,7 +66,7 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Quantum Entanglement Cross-Tab Synchronization (BroadcastChannel)
+  // BroadcastChannel Quantum Entanglement Cross-Tab Listener
   useEffect(() => {
     if ('BroadcastChannel' in window) {
       const channel = new BroadcastChannel('dnyanx_quantum_channel');
@@ -194,6 +197,8 @@ export default function App() {
           onHireClick={() => handleNavSection('services')}
         />
 
+        <PersonalJourney />
+
         <GithubStatsWidget />
 
         <Portfolio t={t} />
@@ -207,6 +212,10 @@ export default function App() {
         <DigitalCardGenerator t={t} />
 
         <Ar3dCard />
+
+        <QrMenuProTool />
+
+        <DigiCardProTool />
 
         <CodeSandbox t={t} />
 
