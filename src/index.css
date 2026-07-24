@@ -1,27 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* DnyanX Tech X DeepSeek AI Cyber-Futuristic Master Design System */
+/* DeepFolio Design System - DeepSeek Minimalism x WorldFolio X Glassmorphism */
 
 :root {
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* DeepSeek Deep Space Palette */
-  --bg-deepseek-obsidian: #050811;
-  --bg-deepseek-midnight: #0b0f17;
-  --bg-deepseek-panel: rgba(15, 23, 42, 0.75);
+  /* DeepFolio Palette */
+  --bg-deep-space: #0a0a0a;
+  --bg-deep-midnight: #050811;
 
-  --deepseek-blue: #0066FF;
-  --deepseek-blue-glow: rgba(0, 102, 255, 0.35);
-  --deepseek-cyan: #00F0FF;
-  --deepseek-cyan-glow: rgba(0, 240, 255, 0.25);
-  
-  --emerald-accent: #10B981;
+  --neon-emerald: #00FF66;
+  --neon-emerald-glow: rgba(0, 255, 102, 0.35);
   --gold-accent: #FFD700;
+  --cyan-deepseek: #22D3EE;
+  --purple-accent: #a855f7;
 }
 
 * {
@@ -33,13 +31,13 @@
 html {
   scroll-behavior: smooth;
   font-family: var(--font-sans);
-  background-color: var(--bg-deepseek-obsidian);
+  background-color: var(--bg-deep-space);
   color-scheme: dark;
 }
 
 body {
-  background-color: var(--bg-deepseek-obsidian);
-  color: #f1f5f9;
+  background-color: var(--bg-deep-space);
+  color: #f8fafc;
   min-height: 100vh;
   overflow-x: hidden;
   line-height: 1.6;
@@ -47,109 +45,116 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* DeepSeek Neural Grid Background */
-.deepseek-neural-grid {
-  background-color: #050811;
-  background-image: 
-    radial-gradient(circle at 50% 20%, rgba(0, 102, 255, 0.15) 0%, transparent 60%),
-    radial-gradient(circle at 80% 60%, rgba(0, 240, 255, 0.08) 0%, transparent 50%),
-    linear-gradient(to right, rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+/* Headings with Space Grotesk */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.03em;
+  font-weight: 700;
 }
 
-/* DeepSeek Cyber Glass Panel */
-.glass-panel {
-  background: rgba(11, 15, 23, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 240, 255, 0.12);
-  border-radius: 1.25rem;
+/* Chat Bubble Style Glass Cards */
+.chat-bubble-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(0, 255, 102, 0.2);
+  border-radius: 1.5rem;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.8);
 }
 
-.glass-panel:hover {
-  border-color: rgba(0, 240, 255, 0.4);
-  box-shadow: 0 20px 45px -10px rgba(0, 102, 255, 0.25);
+.chat-bubble-card:hover {
+  border-color: rgba(0, 255, 102, 0.5);
+  box-shadow: 0 20px 45px -10px rgba(0, 255, 102, 0.2);
   transform: translateY(-2px);
 }
 
-.glass-nav {
-  background: rgba(5, 8, 17, 0.85);
+.glass-panel {
+  background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(0, 240, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.5rem;
+  transition: all 0.3s ease;
 }
 
-/* DeepSeek Blue & Cyan Glow Buttons */
-.deepseek-blue-btn {
-  background: linear-gradient(135deg, #0066FF 0%, #0044BB 100%);
-  color: #ffffff;
-  font-weight: 700;
-  border: 1px solid rgba(0, 240, 255, 0.3);
-  box-shadow: 0 4px 20px rgba(0, 102, 255, 0.4);
-  transition: all 0.25s ease;
+.glass-panel:hover {
+  border-color: rgba(0, 255, 102, 0.3);
 }
 
-.deepseek-blue-btn:hover {
-  background: linear-gradient(135deg, #0088FF 0%, #0066FF 100%);
-  box-shadow: 0 8px 30px rgba(0, 240, 255, 0.6);
-  transform: translateY(-1px);
+.glass-nav {
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.deepseek-cyan-btn {
-  background: linear-gradient(135deg, #00F0FF 0%, #00A8FF 100%);
+/* DeepFolio Neon Emerald & Gold Buttons */
+.emerald-btn {
+  background: linear-gradient(135deg, #00FF66 0%, #059669 100%);
   color: #050811;
   font-weight: 800;
-  box-shadow: 0 4px 20px rgba(0, 240, 255, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 255, 102, 0.35);
   transition: all 0.25s ease;
 }
 
-.deepseek-cyan-btn:hover {
-  background: linear-gradient(135deg, #38BDF8 0%, #00F0FF 100%);
-  box-shadow: 0 8px 30px rgba(0, 240, 255, 0.6);
+.emerald-btn:hover {
+  background: linear-gradient(135deg, #34d399 0%, #00FF66 100%);
+  box-shadow: 0 8px 30px rgba(0, 255, 102, 0.5);
   transform: translateY(-1px);
 }
 
-/* DeepSeek Gradient Typography */
+.gold-btn {
+  background: linear-gradient(135deg, #FFD700 0%, #d97706 100%);
+  color: #050811;
+  font-weight: 800;
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.35);
+  transition: all 0.25s ease;
+}
+
+.gold-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 30px rgba(255, 215, 0, 0.5);
+}
+
+/* DeepFolio Gradient Text */
 .text-gradient {
-  background: linear-gradient(135deg, #ffffff 0%, #38BDF8 50%, #0066FF 100%);
+  background: linear-gradient(135deg, #00FF66 0%, #22D3EE 50%, #FFD700 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.text-gradient-cyan {
-  background: linear-gradient(135deg, #00F0FF 0%, #34D399 100%);
+.text-gradient-gold {
+  background: linear-gradient(135deg, #FFD700 0%, #f59e0b 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* DeepSeek AI Prompt Console Input Box */
-.deepseek-prompt-box {
-  background: rgba(15, 23, 42, 0.9);
-  border: 1.5px solid rgba(0, 240, 255, 0.3);
-  box-shadow: 0 0 25px rgba(0, 102, 255, 0.2);
-  border-radius: 1rem;
+/* Chat Input Bar */
+.chat-input-box {
+  background: rgba(18, 18, 20, 0.9);
+  border: 1.5px solid rgba(0, 255, 102, 0.3);
+  box-shadow: 0 0 30px rgba(0, 255, 102, 0.15);
+  border-radius: 1.25rem;
 }
 
-.deepseek-prompt-box:focus-within {
-  border-color: #00F0FF;
-  box-shadow: 0 0 35px rgba(0, 240, 255, 0.4);
+.chat-input-box:focus-within {
+  border-color: #00FF66;
+  box-shadow: 0 0 40px rgba(0, 255, 102, 0.35);
 }
 
-/* Custom DeepSeek Scrollbar */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #050811;
+  background: #0a0a0a;
 }
 ::-webkit-scrollbar-thumb {
   background: #1e293b;
   border-radius: 9999px;
-  border: 1px solid rgba(0, 240, 255, 0.2);
+  border: 1px solid rgba(0, 255, 102, 0.2);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #0066FF;
+  background: #00FF66;
 }
