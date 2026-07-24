@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import LiveTimerBanner from './components/LiveTimerBanner';
 import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
 import Hero from './components/Hero';
 import Portfolio from './components/Portfolio';
 import DevDashStore from './components/DevDashStore';
@@ -166,7 +167,7 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen ${theme === 'quantum' ? 'bg-slate-950 ring-2 ring-emerald-500' : 'bg-slate-950'} text-slate-100 flex flex-col font-sans relative selection:bg-emerald-500 selection:text-slate-950`}>
+    <div className={`min-h-screen ${theme === 'quantum' ? 'bg-[#020617] ring-2 ring-cyan-500' : 'bg-[#020617]'} text-slate-100 flex font-sans relative selection:bg-cyan-500 selection:text-slate-950`}>
       
       {/* Vercel Speed Insights Telemetry */}
       <SpeedInsights />
@@ -174,124 +175,132 @@ export default function App() {
       {/* Custom Glowing Cursor */}
       <CustomGlowingCursor />
 
-      {/* Top Scroll Progress Bar */}
-      <div 
-        className="fixed top-0 left-0 h-1 bg-gradient-to-r from-emerald-400 via-teal-400 via-amber-400 to-cyan-400 z-50 transition-all duration-150 shadow-lg shadow-emerald-500/50"
-        style={{ width: `${scrollProgress}%` }}
-      />
+      {/* DeepSeek Style Slim Sidebar */}
+      <Sidebar activeTab={activeTab} onNavClick={handleNavSection} />
 
-      {/* RPG Developer Power Meter Badge */}
-      <RpgPowerMeter xpScore={xpScore} />
-
-      {/* Top Countdown Offer Banner */}
-      <LiveTimerBanner t={t} />
-
-      {/* Top Navbar */}
-      <Navbar
-        cartCount={cartItems.length}
-        onOpenCart={() => setCartOpen(true)}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        lang={lang}
-        setLang={setLang}
-        currency={currency}
-        setCurrency={setCurrency}
-        theme={theme}
-        setTheme={setTheme}
-        t={t}
-      />
-
-      {/* Main Content Sections */}
-      <main className="flex-grow">
+      {/* Main Content Workspace Wrapper */}
+      <div className="flex-1 lg:ml-20 flex flex-col min-w-0">
         
-        <Hero
-          t={t}
-          onExploreStore={() => handleNavSection('store')}
-          onHireClick={() => handleNavSection('services')}
+        {/* Top Scroll Progress Bar */}
+        <div 
+          className="fixed top-0 left-0 lg:left-20 h-1 bg-gradient-to-r from-cyan-400 via-emerald-400 via-amber-400 to-blue-500 z-50 transition-all duration-150 shadow-lg shadow-cyan-500/50"
+          style={{ width: `${scrollProgress}%` }}
         />
 
-        <PersonalJourney />
+        {/* RPG Developer Power Meter Badge */}
+        <RpgPowerMeter xpScore={xpScore} />
 
-        <GithubStatsWidget />
+        {/* Top Countdown Offer Banner */}
+        <LiveTimerBanner t={t} />
 
-        <Portfolio t={t} />
-
-        <DevDashStore
-          t={t}
+        {/* Top Navbar */}
+        <Navbar
+          cartCount={cartItems.length}
+          onOpenCart={() => setCartOpen(true)}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          lang={lang}
+          setLang={setLang}
           currency={currency}
-          onAddToCart={handleAddToCart}
-        />
-
-        <AdBanner slot="1234567890" />
-
-        <DigitalCardGenerator t={t} />
-
-        <Ar3dCard />
-
-        <QrMenuProTool />
-
-        <DigiCardProTool />
-
-        <CodeSandbox t={t} />
-
-        <TimeTravelSlider />
-
-        <CompetitorVanquisher />
-
-        <TrustMap />
-
-        <ServicesHub
+          setCurrency={setCurrency}
+          theme={theme}
+          setTheme={setTheme}
           t={t}
-          currency={currency}
-          onSelectService={handleSelectServicePackage}
-          onRequestEstimate={handleRequestEstimate}
         />
 
-        <ClientFlowCRM t={t} />
+        {/* Main Content Sections */}
+        <main className="flex-grow">
+          
+          <Hero
+            t={t}
+            onExploreStore={() => handleNavSection('store')}
+            onHireClick={() => handleNavSection('services')}
+          />
 
-        <StatusTracker t={t} />
+          <PersonalJourney />
 
-        <AutoBragReel />
+          <GithubStatsWidget />
 
-        <AdBanner slot="9876543210" />
+          <Portfolio t={t} />
 
-        <ContactForm t={t} prefilledData={prefilledContactData} />
+          <DevDashStore
+            t={t}
+            currency={currency}
+            onAddToCart={handleAddToCart}
+          />
 
-      </main>
+          <AdBanner slot="1234567890" />
 
-      {/* Cart Modal Drawer */}
-      <CartModal
-        isOpen={cartOpen}
-        onClose={() => setCartOpen(false)}
-        cartItems={cartItems}
-        currency={currency}
-        onRemoveItem={handleRemoveFromCart}
-        onClearCart={handleClearCart}
-        onOpenUpi={() => {
-          setCartOpen(false);
-          setUpiOpen(true);
-        }}
-      />
+          <DigitalCardGenerator t={t} />
 
-      {/* UPI Payment Modal */}
-      <UpiPaymentModal
-        isOpen={upiOpen}
-        onClose={() => setUpiOpen(false)}
-        totalInr={cartItems.reduce((acc, i) => acc + i.price, 0) * 83.5}
-        items={cartItems}
-      />
+          <Ar3dCard />
 
-      {/* AI Assistant Chatbot */}
-      <AiChatbot onTriggerAction={handleNavSection} />
+          <QrMenuProTool />
 
-      {/* Voice Control Navigation */}
-      <VoiceController
-        onNavigate={handleNavSection}
-        onToggleTheme={() => setTheme(theme === 'dark' ? 'quantum' : 'dark')}
-      />
+          <DigiCardProTool />
 
-      {/* Footer */}
-      <Footer t={t} />
+          <CodeSandbox t={t} />
+
+          <TimeTravelSlider />
+
+          <CompetitorVanquisher />
+
+          <TrustMap />
+
+          <ServicesHub
+            t={t}
+            currency={currency}
+            onSelectService={handleSelectServicePackage}
+            onRequestEstimate={handleRequestEstimate}
+          />
+
+          <ClientFlowCRM t={t} />
+
+          <StatusTracker t={t} />
+
+          <AutoBragReel />
+
+          <AdBanner slot="9876543210" />
+
+          <ContactForm t={t} prefilledData={prefilledContactData} />
+
+        </main>
+
+        {/* Cart Modal Drawer */}
+        <CartModal
+          isOpen={cartOpen}
+          onClose={() => setCartOpen(false)}
+          cartItems={cartItems}
+          currency={currency}
+          onRemoveItem={handleRemoveFromCart}
+          onClearCart={handleClearCart}
+          onOpenUpi={() => {
+            setCartOpen(false);
+            setUpiOpen(true);
+          }}
+        />
+
+        {/* UPI Payment Modal */}
+        <UpiPaymentModal
+          isOpen={upiOpen}
+          onClose={() => setUpiOpen(false)}
+          totalInr={cartItems.reduce((acc, i) => acc + i.price, 0) * 83.5}
+          items={cartItems}
+        />
+
+        {/* AI Assistant Chatbot */}
+        <AiChatbot onTriggerAction={handleNavSection} />
+
+        {/* Voice Control Navigation */}
+        <VoiceController
+          onNavigate={handleNavSection}
+          onToggleTheme={() => setTheme(theme === 'dark' ? 'quantum' : 'dark')}
+        />
+
+        {/* Footer */}
+        <Footer t={t} />
+
+      </div>
 
     </div>
   );
