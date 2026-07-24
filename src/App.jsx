@@ -29,6 +29,7 @@ import QrMenuProTool from './components/QrMenuProTool';
 import DigiCardProTool from './components/DigiCardProTool';
 
 import { TRANSLATIONS } from './data/translations';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import confetti from 'canvas-confetti';
 
 export default function App() {
@@ -161,6 +162,9 @@ export default function App() {
   return (
     <div className={`min-h-screen ${theme === 'quantum' ? 'bg-slate-950 ring-2 ring-emerald-500' : 'bg-slate-950'} text-slate-100 flex flex-col font-sans relative selection:bg-emerald-500 selection:text-slate-950`}>
       
+      {/* Vercel Speed Insights */}
+      <SpeedInsights />
+
       {/* Top Scroll Progress Bar */}
       <div 
         className="fixed top-0 left-0 h-1 bg-gradient-to-r from-emerald-400 via-yellow-400 to-cyan-400 z-50 transition-all duration-150 shadow-lg shadow-emerald-500/50"
