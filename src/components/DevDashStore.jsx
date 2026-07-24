@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { DEVDASH_ITEMS } from '../data/mockData';
 import CodePreviewModal from './CodePreviewModal';
-import { ShoppingBag, Search, Eye, Star, Check, Sparkles, Filter, Code2, Tag } from 'lucide-react';
+import { ShoppingBag, Search, Eye, Star, Check, Tag } from 'lucide-react';
+import { formatPrice, CURRENCY_MAP } from '../utils/currencyEngine';
 
 export default function DevDashStore({ t, currency, onAddToCart }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -10,9 +11,6 @@ export default function DevDashStore({ t, currency, onAddToCart }) {
   const [addedItems, setAddedItems] = useState({});
 
   const categories = ['All', 'SaaS Boilerplates', 'Full Stack', 'UI Kits', 'Mobile Kits'];
-
-  const rate = currency === 'INR' ? 83.5 : 1.0;
-  const symbol = currency === 'INR' ? '₹' : '$';
 
   const filteredItems = DEVDASH_ITEMS.filter((item) => {
     const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory;
@@ -37,7 +35,7 @@ export default function DevDashStore({ t, currency, onAddToCart }) {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
           <span className="tag-badge-cyan mb-3">
-            <ShoppingBag size={12} /> Digital Code Store
+            <ShoppingBag size={12} /> Digital Code Store ({currency || 'USD'})
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
             DevDash <span className="text-gradient">Code Marketplace</span>
@@ -55,7 +53,7 @@ export default function DevDashStore({ t, currency, onAddToCart }) {
             <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
             <input
               type="text"
-              placeholder={t.searchPlaceholder}
+              placeholder={t.searchPlaceholder || "Search templates or code..."}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 placeholder-slate-500 text-xs focus:outline-none focus:border-emerald-500 transition-colors"
@@ -84,8 +82,10 @@ export default function DevDashStore({ t, currency, onAddToCart }) {
         {/* Store Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {filteredItems.map((item) => {
-            const displayPrice = Math.round(item.price * rate);
-            const displayOriginal = Math.round(item.originalPrice * rate);
+            const baseInr = item.price * 83.5;
+            const originalInr = item.originalPrice * 83.5;
+            const displayPrice = formatPrice(baseInr, currency);
+            const displayOriginal = formatPrice(originalInr, currency);
 
             return (
               <div 
@@ -129,8 +129,8 @@ export default function DevDashStore({ t, currency, onAddToCart }) {
 
                 <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between gap-3">
                   <div className="flex items-baseline gap-2 font-mono">
-                    <span className="text-2xl font-extrabold text-white">{symbol}{displayPrice}</span>
-                    <span className="text-xs text-slate-500 line-through">{symbol}{displayOriginal}</span>
+                    <span className="text-2xl font-extrabold text-white">{displayPrice}</span>
+                    <span className="text-xs text-slate-500 line-through">{displayOriginal}</span>
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -139,7 +139,7 @@ export default function DevDashStore({ t, currency, onAddToCart }) {
                       className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 flex items-center gap-1.5 transition-all"
                     >
                       <Eye size={14} className="text-cyan-400" />
-                      <span>{t.previewSnippet}</span>
+                      <span>{t.previewSnippet || "Preview"}</span>
                     </button>
 
                     <button
@@ -153,11 +153,11 @@ export default function DevDashStore({ t, currency, onAddToCart }) {
                     >
                       {addedItems[item.id] ? (
                         <>
-                          <Check size={14} /> {t.added}
+                          <Check size={14} /> {t.added || "Added"}
                         </>
                       ) : (
                         <>
-                          <ShoppingBag size={14} /> {t.addToCart}
+                          <ShoppingBag size={14} /> {t.addToCart || "Add to Cart"}
                         </>
                       )}
                     </button>
