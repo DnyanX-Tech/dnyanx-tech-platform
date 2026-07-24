@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ShoppingBag, Terminal, ChevronDown, Sparkles, Code, Calculator, MessageSquare, Globe, Heart, Utensils, CreditCard, Users, Activity, Cpu } from 'lucide-react';
+import { ShoppingBag, Terminal, ChevronDown, Sparkles, Code, Calculator, MessageSquare, Globe, Heart, Utensils, CreditCard, Users, Activity, Cpu, DollarSign } from 'lucide-react';
+import { LANGUAGES } from '../data/translations';
+import { CURRENCY_MAP } from '../utils/currencyEngine';
 
 export default function Navbar({ 
   cartCount, 
@@ -23,6 +25,16 @@ export default function Navbar({
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Update HTML dir attribute for RTL languages (Arabic, Urdu)
+  useEffect(() => {
+    const currentLangObj = LANGUAGES.find((l) => l.code === lang);
+    if (currentLangObj && currentLangObj.dir === 'rtl') {
+      document.documentElement.setAttribute('dir', 'rtl');
+    } else {
+      document.documentElement.setAttribute('dir', 'ltr');
+    }
+  }, [lang]);
 
   const primaryNavItems = [
     { id: 'hero', label: t.home || 'Home', icon: Terminal },
@@ -56,12 +68,12 @@ export default function Navbar({
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'glass-nav py-3 shadow-2xl' : 'bg-slate-950/80 backdrop-blur-xl py-4 border-b border-cyan-500/10'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         
-        {/* DeepSeek Style Brand Logo */}
+        {/* Brand Logo */}
         <div 
           onClick={() => handleNavClick('hero')} 
           className="flex items-center gap-3 cursor-pointer group"
         >
-          <div className="w-11 h-11 rounded-2xl p-0.5 bg-gradient-to-tr from-blue-600 via-cyan-400 to-blue-400 shadow-xl shadow-cyan-500/20 group-hover:scale-105 transition-transform duration-300 flex items-center justify-center">
+          <div className="w-11 h-11 rounded-2xl p-0.5 bg-gradient-to-tr from-emerald-400 via-cyan-400 to-amber-400 shadow-xl shadow-cyan-500/20 group-hover:scale-105 transition-transform duration-300 flex items-center justify-center">
             <img 
               src="./dnyanx-logo.svg" 
               alt="DnyanX Tech Official Emblem" 
@@ -72,9 +84,9 @@ export default function Navbar({
             <div className="flex items-center gap-1.5 font-black text-lg sm:text-xl tracking-tight text-white">
               <span>DnyanX</span>
               <span className="text-gradient">Tech</span>
-              <span className="text-xs bg-blue-500/20 text-cyan-300 px-2 py-0.5 rounded-full border border-cyan-500/30 font-mono">DeepSeek AI ⚡</span>
+              <span className="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/30 font-mono">Global 🌐</span>
             </div>
-            <p className="text-[9px] text-cyan-400/90 font-mono tracking-widest uppercase font-bold">ECO-FRIENDLY & FUTURE-READY</p>
+            <p className="text-[9px] text-cyan-400/90 font-mono tracking-widest uppercase font-bold">{t.tagline || 'ONE HUMAN. GREEN FUTURE.'}</p>
           </div>
         </div>
 
@@ -89,14 +101,14 @@ export default function Navbar({
                 onClick={() => handleNavClick(item.id)}
                 className={`px-4 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 transition-all ${
                   isActive
-                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg shadow-cyan-500/30'
+                    ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 shadow-lg shadow-emerald-500/30'
                     : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
                 }`}
               >
                 <Icon size={13} />
                 <span>{item.label}</span>
                 {item.badge && (
-                  <span className={`text-[9px] px-1.5 py-0.2 rounded-full font-bold ${isActive ? 'bg-slate-950 text-cyan-300' : 'bg-blue-500/20 text-cyan-300'}`}>
+                  <span className={`text-[9px] px-1.5 py-0.2 rounded-full font-bold ${isActive ? 'bg-slate-950 text-emerald-300' : 'bg-emerald-500/20 text-emerald-300'}`}>
                     {item.badge}
                   </span>
                 )}
@@ -135,42 +147,57 @@ export default function Navbar({
           </div>
         </nav>
 
-        {/* Controls: Language, Currency & Cart */}
+        {/* Controls: 30+ Languages Selector, World Currencies & Cart */}
         <div className="flex items-center gap-2">
           
-          {/* Language Selector */}
-          <div className="relative flex items-center bg-slate-900 border border-cyan-500/20 rounded-xl px-2.5 py-1 text-xs font-mono text-slate-300">
-            <Globe size={13} className="text-cyan-400 mr-1" />
+          {/* 30+ Languages Dropdown */}
+          <div className="relative flex items-center bg-slate-900 border border-emerald-500/30 rounded-xl px-2 py-1 text-xs font-mono text-slate-300">
+            <Globe size={13} className="text-emerald-400 mr-1" />
             <select
               value={lang}
               onChange={(e) => setLang(e.target.value)}
-              className="bg-transparent text-white focus:outline-none cursor-pointer font-bold"
+              className="bg-transparent text-white focus:outline-none cursor-pointer font-bold max-w-[90px] sm:max-w-none"
             >
-              <option value="en" className="bg-slate-900">EN 🌐</option>
-              <option value="mr" className="bg-slate-900">MR 🚩</option>
-              <option value="hi" className="bg-slate-900">HI 🇮🇳</option>
+              {LANGUAGES.map((l) => (
+                <option key={l.code} value={l.code} className="bg-slate-900 text-white">
+                  {l.flag} {l.native}
+                </option>
+              ))}
             </select>
           </div>
 
-          {/* Currency Switcher */}
-          <button
-            onClick={() => setCurrency(currency === 'USD' ? 'INR' : 'USD')}
-            className="px-2.5 py-1 rounded-xl bg-slate-900 border border-cyan-500/20 text-xs font-mono font-bold text-cyan-400 hover:border-cyan-400/40 transition-all flex items-center gap-1"
-            title="Toggle Currency ($ USD vs ₹ INR)"
-          >
-            <span>{currency === 'USD' ? '$ USD' : '₹ INR'}</span>
-          </button>
+          {/* All World Currencies Dropdown */}
+          <div className="relative flex items-center bg-slate-900 border border-cyan-500/30 rounded-xl px-2 py-1 text-xs font-mono text-cyan-300">
+            <DollarSign size={13} className="text-cyan-400 mr-0.5" />
+            <select
+              value={currency}
+              onChange={(e) => {
+                setCurrency(e.target.value);
+                localStorage.setItem('dnyanx_currency', e.target.value);
+              }}
+              className="bg-transparent text-white focus:outline-none cursor-pointer font-bold max-w-[80px]"
+            >
+              {Object.keys(CURRENCY_MAP).map((code) => {
+                const c = CURRENCY_MAP[code];
+                return (
+                  <option key={code} value={code} className="bg-slate-900 text-white">
+                    {c.flag} {c.code} ({c.symbol})
+                  </option>
+                );
+              })}
+            </select>
+          </div>
 
           {/* Cart Button */}
           <button
             onClick={onOpenCart}
-            className="relative p-2.5 rounded-xl deepseek-cyan-btn text-xs font-extrabold transition-all flex items-center gap-1.5 group shadow-lg"
+            className="relative p-2.5 rounded-xl emerald-btn text-xs font-extrabold transition-all flex items-center gap-1.5 group shadow-lg"
             title="View Shopping Cart"
           >
             <ShoppingBag size={15} />
-            <span className="hidden sm:inline">{t.cart}</span>
+            <span className="hidden sm:inline">{t.cart || 'Cart'}</span>
             {cartCount > 0 && (
-              <span className="bg-slate-950 text-cyan-400 font-extrabold text-[10px] w-4 h-4 rounded-full flex items-center justify-center animate-bounce">
+              <span className="bg-slate-950 text-emerald-400 font-extrabold text-[10px] w-4 h-4 rounded-full flex items-center justify-center animate-bounce">
                 {cartCount}
               </span>
             )}

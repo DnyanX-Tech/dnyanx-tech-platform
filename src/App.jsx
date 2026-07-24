@@ -35,6 +35,8 @@ import AdBanner from './components/AdBanner';
 // UI Enhancements: Glowing Cursor
 import CustomGlowingCursor from './components/CustomGlowingCursor';
 
+// Global Geo-Location Hook
+import { useGeoLocation } from './hooks/useGeoLocation';
 import { TRANSLATIONS } from './data/translations';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import confetti from 'canvas-confetti';
@@ -49,6 +51,9 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('hero');
   const [cartOpen, setCartOpen] = useState(false);
   const [upiOpen, setUpiOpen] = useState(false);
+
+  // Auto IP Geo-location & Language/Currency Detection
+  const geoData = useGeoLocation(setLang, setCurrency);
 
   const [cartItems, setCartItems] = useState(() => {
     try {
@@ -280,12 +285,13 @@ export default function App() {
           }}
         />
 
-        {/* UPI Payment Modal */}
+        {/* UPI / Stripe Dynamic Payment Modal */}
         <UpiPaymentModal
           isOpen={upiOpen}
           onClose={() => setUpiOpen(false)}
           totalInr={cartItems.reduce((acc, i) => acc + i.price, 0) * 83.5}
           items={cartItems}
+          isIndia={geoData.countryCode === 'IN'}
         />
 
         {/* AI Assistant Chatbot */}
