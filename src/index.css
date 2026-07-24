@@ -1,23 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* DnyanX Tech Platform - Premium Design System */
+/* DnyanX Tech Platform - Ultra Luxury Cyberpunk Design System */
 
 :root {
-  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Color Palette */
-  --bg-dark: #020617;
-  --bg-card: rgba(15, 23, 42, 0.75);
-  --border-glow: rgba(0, 255, 102, 0.3);
-  --border-card: rgba(255, 255, 255, 0.08);
+  /* Luxury Dark Palette */
+  --bg-obsidian: #030712;
+  --bg-surface: rgba(15, 23, 42, 0.7);
+  --bg-glass: rgba(255, 255, 255, 0.03);
 
-  --emerald-main: #00FF66;
-  --emerald-glow: rgba(0, 255, 102, 0.4);
-  --cyber-gold: #FFD700;
-  --cyber-teal: #06B6D4;
+  --emerald-neon: #00FF66;
+  --emerald-glow: rgba(0, 255, 102, 0.35);
+  --gold-cyber: #FFD700;
+  --teal-electric: #14B8A6;
+  --purple-quantum: #a855f7;
 }
 
 * {
@@ -29,82 +31,108 @@
 html {
   scroll-behavior: smooth;
   font-family: var(--font-sans);
+  background-color: var(--bg-obsidian);
 }
 
 body {
-  background-color: var(--bg-dark);
+  background-color: var(--bg-obsidian);
   color: #f8fafc;
   min-height: 100vh;
   overflow-x: hidden;
   line-height: 1.6;
+  font-family: var(--font-sans);
 }
 
-/* Glassmorphism & Background Glows */
+/* Premium Typography Elements */
+h1, h2, h3, h4 {
+  font-family: var(--font-sans);
+  letter-spacing: -0.03em;
+}
+
+/* Ultra Glassmorphism Card System */
 .glass-panel {
-  background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-card);
-  border-radius: 1rem;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.5rem;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.5);
 }
 
 .glass-panel:hover {
-  border-color: rgba(0, 255, 102, 0.4);
-  box-shadow: 0 10px 30px -10px rgba(0, 255, 102, 0.2);
+  border-color: rgba(0, 255, 102, 0.35);
+  box-shadow: 0 25px 60px -12px rgba(0, 255, 102, 0.15);
+  transform: translateY(-3px);
 }
 
 .glass-nav {
-  background: rgba(2, 6, 23, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(3, 7, 18, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Gradients & Text Glows */
+/* Luxury Multi-Gradient Text */
 .text-gradient {
-  background: linear-gradient(135deg, #00FF66 0%, #38bdf8 50%, #FFD700 100%);
+  background: linear-gradient(135deg, #00FF66 0%, #14B8A6 45%, #FFD700 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.text-emerald-glow {
-  color: #00FF66;
-  text-shadow: 0 0 15px rgba(0, 255, 102, 0.4);
+.text-gradient-purple {
+  background: linear-gradient(135deg, #a855f7 0%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .bg-gradient-radial {
-  background: radial-gradient(circle at 50% 20%, rgba(0, 255, 102, 0.15) 0%, rgba(6, 182, 212, 0.08) 45%, transparent 70%);
+  background: radial-gradient(circle at 50% 15%, rgba(0, 255, 102, 0.12) 0%, rgba(20, 184, 166, 0.06) 40%, transparent 75%);
 }
 
+/* High-Impact Glow Buttons */
 .emerald-glow-btn {
   background: linear-gradient(135deg, #00FF66 0%, #059669 100%);
-  color: #020617;
-  font-weight: 700;
-  box-shadow: 0 4px 20px rgba(0, 255, 102, 0.4);
-  transition: all 0.25s ease;
+  color: #030712;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  box-shadow: 0 6px 25px rgba(0, 255, 102, 0.35);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .emerald-glow-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0, 255, 102, 0.6);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 35px rgba(0, 255, 102, 0.5);
   background: linear-gradient(135deg, #34d399 0%, #00FF66 100%);
 }
 
-/* Animations */
+.gold-glow-btn {
+  background: linear-gradient(135deg, #FFD700 0%, #d97706 100%);
+  color: #030712;
+  font-weight: 800;
+  box-shadow: 0 6px 25px rgba(255, 215, 0, 0.35);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gold-glow-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 35px rgba(255, 215, 0, 0.5);
+}
+
+/* Pulsing Glow Animation */
 @keyframes pulseGlow {
   0%, 100% {
-    opacity: 0.4;
+    opacity: 0.3;
     transform: scale(1);
   }
   50% {
-    opacity: 0.8;
-    transform: scale(1.05);
+    opacity: 0.7;
+    transform: scale(1.04);
   }
 }
 
 .animate-pulse-glow {
-  animation: pulseGlow 4s infinite ease-in-out;
+  animation: pulseGlow 5s infinite ease-in-out;
 }
 
 /* Custom Scrollbar */
@@ -112,53 +140,23 @@ body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #020617;
+  background: #030712;
 }
 ::-webkit-scrollbar-thumb {
   background: #1e293b;
-  border-radius: 4px;
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #00FF66;
 }
 
-/* Badge tags */
-.tag-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
+/* Luxury Card Tag Badge */
+.tag-badge-cyan {
+  background: rgba(20, 184, 166, 0.1);
+  color: #2dd4bf;
+  border: 1px solid rgba(20, 184, 166, 0.3);
   padding: 0.25rem 0.75rem;
   border-radius: 9999px;
   font-size: 0.75rem;
-  font-weight: 600;
-  background: rgba(0, 255, 102, 0.1);
-  color: #00FF66;
-  border: 1px solid rgba(0, 255, 102, 0.3);
-}
-
-.tag-badge-cyan {
-  background: rgba(6, 182, 212, 0.1);
-  color: #38bdf8;
-  border: 1px solid rgba(6, 182, 212, 0.3);
-}
-
-.tag-badge-purple {
-  background: rgba(139, 92, 246, 0.1);
-  color: #c084fc;
-  border: 1px solid rgba(139, 92, 246, 0.3);
-}
-
-@keyframes modalFadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95) translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-.animate-modal {
-  animation: modalFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  font-weight: 700;
 }

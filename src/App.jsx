@@ -28,9 +28,8 @@ import PersonalJourney from './components/PersonalJourney';
 import QrMenuProTool from './components/QrMenuProTool';
 import DigiCardProTool from './components/DigiCardProTool';
 
-// UI Enhancements: Glowing Cursor & Floating Nav Dots
+// UI Enhancements: Glowing Cursor
 import CustomGlowingCursor from './components/CustomGlowingCursor';
-import FloatingNavDots from './components/FloatingNavDots';
 
 import { TRANSLATIONS } from './data/translations';
 import { SpeedInsights } from '@vercel/speed-insights/react';
@@ -172,12 +171,9 @@ export default function App() {
       {/* Custom Glowing Cursor */}
       <CustomGlowingCursor />
 
-      {/* Floating Navigation Dots */}
-      <FloatingNavDots activeSection={activeTab} onNavigate={handleNavSection} />
-
       {/* Top Scroll Progress Bar */}
       <div 
-        className="fixed top-0 left-0 h-1 bg-gradient-to-r from-emerald-400 via-yellow-400 to-cyan-400 z-50 transition-all duration-150 shadow-lg shadow-emerald-500/50"
+        className="fixed top-0 left-0 h-1 bg-gradient-to-r from-emerald-400 via-teal-400 via-amber-400 to-cyan-400 z-50 transition-all duration-150 shadow-lg shadow-emerald-500/50"
         style={{ width: `${scrollProgress}%` }}
       />
 
