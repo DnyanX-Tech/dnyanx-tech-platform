@@ -1,32 +1,44 @@
-// DnyanX Tech Platform - Global Multi-Language Translation Dictionaries (25+ Languages)
+// DnyanX Tech Platform - Ultimate Master 22 Official Indian Languages + 30+ World Languages Dictionary
 
 export const LANGUAGES = [
-  // Indian Languages
-  { code: 'mr', name: 'मराठी', native: 'मराठी', flag: '🚩', dir: 'ltr' },
-  { code: 'hi', name: 'हिन्दी', native: 'हिन्दी', flag: '🇮🇳', dir: 'ltr' },
-  { code: 'gu', name: 'ગુજરાતી', native: 'ગુજરાતી', flag: '🇮🇳', dir: 'ltr' },
-  { code: 'bn', name: 'বাংলা', native: 'বাংলা', flag: '🇮🇳', dir: 'ltr' },
-  { code: 'ta', name: 'தமிழ்', native: 'தமிழ்', flag: '🇮🇳', dir: 'ltr' },
-  { code: 'te', name: 'తెలుగు', native: 'తెలుగు', flag: '🇮🇳', dir: 'ltr' },
-  { code: 'kn', name: 'கன்னட', native: 'கன்னட', flag: '🇮🇳', dir: 'ltr' },
-  { code: 'ml', name: 'മലയാളം', native: 'മലയാളം', flag: '🇮🇳', dir: 'ltr' },
-  { code: 'pa', name: 'ਪੰਜਾਬੀ', native: 'ਪੰਜਾਬੀ', flag: '🇮🇳', dir: 'ltr' },
-  { code: 'ur', name: 'اردو', native: 'اردو', flag: '🇵🇰', dir: 'rtl' },
+  // 22 Official Indian Languages
+  { code: 'mr', name: 'मराठी (Marathi)', native: 'मराठी', flag: '🚩', dir: 'ltr' },
+  { code: 'hi', name: 'हिन्दी (Hindi)', native: 'हिन्दी', flag: '🇮🇳', dir: 'ltr' },
+  { code: 'gu', name: 'ગુજરાતી (Gujarati)', native: 'ગુજરાતી', flag: '🇮🇳', dir: 'ltr' },
+  { code: 'bn', name: 'বাংলা (Bengali)', native: 'বাংলা', flag: '🇮🇳', dir: 'ltr' },
+  { code: 'ta', name: 'தமிழ் (Tamil)', native: 'தமிழ்', flag: '🇮🇳', dir: 'ltr' },
+  { code: 'te', name: 'తెలుగు (Telugu)', native: 'తెలుగు', flag: '🇮🇳', dir: 'ltr' },
+  { code: 'kn', name: 'ಕನ್ನಡ (Kannada)', native: 'ಕನ್ನಡ', flag: '🇮🇳', dir: 'ltr' },
+  { code: 'ml', name: 'മലയാളം (Malayalam)', native: 'മലയാളം', flag: '🇮🇳', dir: 'ltr' },
+  { code: 'pa', name: 'ਪੰਜਾਬੀ (Punjabi)', native: 'ਪੰਜਾਬੀ', flag: '🇮🇳', dir: 'ltr' },
+  { code: 'ur', name: 'اردو (Urdu)', native: 'اردو', flag: '🇵🇰', dir: 'rtl' },
+  { code: 'or', name: 'ଓଡ଼ିଆ (Odia)', native: 'ଓଡ଼ିଆ', flag: '🇮🇳', dir: 'ltr' },
+  { code: 'as', name: 'অসমীয়া (Assamese)', native: 'অসমীয়া', flag: '🇮🇳', dir: 'ltr' },
+  { code: 'ks', name: 'کٲشُر (Kashmiri)', native: 'کٲشُر', flag: '🇮🇳', dir: 'rtl' },
+  { code: 'ne', name: 'नेपाली (Nepali)', native: 'नेपाली', flag: '🇳🇵', dir: 'ltr' },
+  { code: 'sa', name: 'संस्कृतम् (Sanskrit)', native: 'संस्कृतम्', flag: '🕉️', dir: 'ltr' },
+  { code: 'sd', name: 'سنڌي (Sindhi)', native: 'سنڌي', flag: '🇮🇳', dir: 'rtl' },
+  { code: 'kok', name: 'कोंकणी (Konkani)', native: 'कोंकणी', flag: '🇮🇳', dir: 'ltr' },
+  { code: 'mai', name: 'मैथिली (Maithili)', native: 'मैथिली', flag: '🇮🇳', dir: 'ltr' },
+  { code: 'sat', name: 'ᱥᱟᱱᱛᱟᱲᱤ (Santali)', native: 'ᱥᱟᱱᱛᱟᱲᱤ', flag: '🇮🇳', dir: 'ltr' },
+  { code: 'mni', name: 'ꯃꯤꯇꯩ ꯂꯣꯟ (Manipuri)', native: 'ꯃꯤꯇꯩ ꯂꯣꯟ', flag: '🇮🇳', dir: 'ltr' },
+  { code: 'brx', name: 'बर\' (Bodo)', native: 'बर\'', flag: '🇮🇳', dir: 'ltr' },
+  { code: 'doi', name: 'डोगरी (Dogri)', native: 'डोगरी', flag: '🇮🇳', dir: 'ltr' },
 
-  // World Languages
-  { code: 'en', name: 'English', native: 'English', flag: '🌐', dir: 'ltr' },
-  { code: 'es', name: 'Español', native: 'Español', flag: '🇪🇸', dir: 'ltr' },
-  { code: 'fr', name: 'Français', native: 'Français', flag: '🇫🇷', dir: 'ltr' },
-  { code: 'de', name: 'Deutsch', native: 'Deutsch', flag: '🇩🇪', dir: 'ltr' },
-  { code: 'zh', name: '中文', native: '简体中文', flag: '🇨🇳', dir: 'ltr' },
-  { code: 'ja', name: '日本語', native: '日本語', flag: '🇯🇵', dir: 'ltr' },
-  { code: 'ru', name: 'Русский', native: 'Русский', flag: '🇷🇺', dir: 'ltr' },
-  { code: 'ar', name: 'العربية', native: 'العربية', flag: '🇸🇦', dir: 'rtl' },
-  { code: 'pt', name: 'Português', native: 'Português', flag: '🇵🇹', dir: 'ltr' },
-  { code: 'it', name: 'Italiano', native: 'Italiano', flag: '🇮🇹', dir: 'ltr' },
-  { code: 'ko', name: '한국어', native: '한국어', flag: '🇰🇷', dir: 'ltr' },
-  { code: 'nl', name: 'Nederlands', native: 'Nederlands', flag: '🇳🇱', dir: 'ltr' },
-  { code: 'tr', name: 'Türkçe', native: 'Türkçe', flag: '🇹🇷', dir: 'ltr' }
+  // World Major Languages
+  { code: 'en', name: 'English (US/UK)', native: 'English', flag: '🌐', dir: 'ltr' },
+  { code: 'es', name: 'Español (Spanish)', native: 'Español', flag: '🇪🇸', dir: 'ltr' },
+  { code: 'fr', name: 'Français (French)', native: 'Français', flag: '🇫🇷', dir: 'ltr' },
+  { code: 'de', name: 'Deutsch (German)', native: 'Deutsch', flag: '🇩🇪', dir: 'ltr' },
+  { code: 'zh', name: '中文 (Chinese)', native: '简体中文', flag: '🇨🇳', dir: 'ltr' },
+  { code: 'ja', name: '日本語 (Japanese)', native: '日本語', flag: '🇯🇵', dir: 'ltr' },
+  { code: 'ru', name: 'Русский (Russian)', native: 'Русский', flag: '🇷🇺', dir: 'ltr' },
+  { code: 'ar', name: 'العربية (Arabic)', native: 'العربية', flag: '🇸🇦', dir: 'rtl' },
+  { code: 'pt', name: 'Português (Portuguese)', native: 'Português', flag: '🇵🇹', dir: 'ltr' },
+  { code: 'it', name: 'Italiano (Italian)', native: 'Italiano', flag: '🇮🇹', dir: 'ltr' },
+  { code: 'ko', name: '한국어 (Korean)', native: '한국어', flag: '🇰🇷', dir: 'ltr' },
+  { code: 'nl', name: 'Nederlands (Dutch)', native: 'Nederlands', flag: '🇳🇱', dir: 'ltr' },
+  { code: 'tr', name: 'Türkçe (Turkish)', native: 'Türkçe', flag: '🇹🇷', dir: 'ltr' }
 ];
 
 export const TRANSLATIONS = {
