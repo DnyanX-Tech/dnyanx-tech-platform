@@ -2,23 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { Timer, Sparkles, Copy, Check, ShieldAlert } from 'lucide-react';
 
 export default function LiveTimerBanner({ t }) {
-  const [timeLeft, setTimeLeft] = useState({ hours: 1, minutes: 59, seconds: 59 });
+  const [elapsed, setElapsed] = useState({ hours: 48, minutes: 12, seconds: 35 });
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    const target = new Date().getTime() + (120 * 60 * 1000); // 120 minutes countdown
+    // Start count up from 2026-07-22T09:47:00 IST
+    const start = new Date('2026-07-22T09:47:00+05:30').getTime();
+
     const interval = setInterval(() => {
       const now = new Date().getTime();
-      const difference = target - now;
+      const difference = Math.max(0, now - start);
 
-      if (difference <= 0) {
-        clearInterval(interval);
-      } else {
-        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-        setTimeLeft({ hours, minutes, seconds });
-      }
+      const hours = Math.floor(difference / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+      setElapsed({ hours, minutes, seconds });
     }, 1000);
 
     return () => clearInterval(interval);
@@ -38,15 +36,15 @@ export default function LiveTimerBanner({ t }) {
         <div className="flex items-center gap-2">
           <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
           <Sparkles size={14} className="text-emerald-400" />
-          <span>{t.liveOffer}</span>
+          <span>{t ? t.liveOffer : "SPECIAL RELEASE OFFER: 20% OFF CODE KITS WITH CODE DNYANX20!"}</span>
         </div>
 
-        {/* Center: Live Timer */}
-        <div className="flex items-center gap-2 bg-slate-950/80 px-3 py-1 rounded-full border border-emerald-500/30 font-mono text-[11px]">
-          <Timer size={13} className="text-cyan-400" />
-          <span>Offer Ends In:</span>
+        {/* Center: Live Timer counting up from 2026-07-22T09:47:00 IST */}
+        <div className="flex items-center gap-2 bg-slate-950/80 px-3 py-1 rounded-full border border-emerald-500/30 font-mono text-[11px] shadow-lg">
+          <Timer size={13} className="text-emerald-400 animate-spin" />
+          <span>⚡ Built & Deployed:</span>
           <span className="text-emerald-400 font-bold">
-            {String(timeLeft.hours).padStart(2, '0')}h : {String(timeLeft.minutes).padStart(2, '0')}m : {String(timeLeft.seconds).padStart(2, '0')}s
+            {String(elapsed.hours).padStart(2, '0')}h : {String(elapsed.minutes).padStart(2, '0')}m : {String(elapsed.seconds).padStart(2, '0')}s
           </span>
         </div>
 

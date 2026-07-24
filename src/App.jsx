@@ -28,6 +28,10 @@ import PersonalJourney from './components/PersonalJourney';
 import QrMenuProTool from './components/QrMenuProTool';
 import DigiCardProTool from './components/DigiCardProTool';
 
+// UI Enhancements: Glowing Cursor & Floating Nav Dots
+import CustomGlowingCursor from './components/CustomGlowingCursor';
+import FloatingNavDots from './components/FloatingNavDots';
+
 import { TRANSLATIONS } from './data/translations';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import confetti from 'canvas-confetti';
@@ -37,7 +41,7 @@ export default function App() {
   const [currency, setCurrency] = useState('USD');
   const [theme, setTheme] = useState('dark');
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [xpScore, setXpScore] = useState(480);
+  const [xpScore, setXpScore] = useState(520);
 
   const [activeTab, setActiveTab] = useState('hero');
   const [cartOpen, setCartOpen] = useState(false);
@@ -162,8 +166,14 @@ export default function App() {
   return (
     <div className={`min-h-screen ${theme === 'quantum' ? 'bg-slate-950 ring-2 ring-emerald-500' : 'bg-slate-950'} text-slate-100 flex flex-col font-sans relative selection:bg-emerald-500 selection:text-slate-950`}>
       
-      {/* Vercel Speed Insights */}
+      {/* Vercel Speed Insights Telemetry */}
       <SpeedInsights />
+
+      {/* Custom Glowing Cursor */}
+      <CustomGlowingCursor />
+
+      {/* Floating Navigation Dots */}
+      <FloatingNavDots activeSection={activeTab} onNavigate={handleNavSection} />
 
       {/* Top Scroll Progress Bar */}
       <div 
