@@ -4,22 +4,24 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Apple / Vercel Minimalist Clean Design System */
+/* DnyanX Tech X DeepSeek AI Cyber-Futuristic Master Design System */
 
 :root {
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Vercel Crisp Obsidian Palette */
-  --bg-black: #000000;
-  --bg-zinc-950: #09090b;
-  --bg-zinc-900: #18181b;
+  /* DeepSeek Deep Space Palette */
+  --bg-deepseek-obsidian: #050811;
+  --bg-deepseek-midnight: #0b0f17;
+  --bg-deepseek-panel: rgba(15, 23, 42, 0.75);
 
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-hover: rgba(255, 255, 255, 0.2);
-
-  --accent-emerald: #10B981;
-  --accent-cyan: #06B6D4;
+  --deepseek-blue: #0066FF;
+  --deepseek-blue-glow: rgba(0, 102, 255, 0.35);
+  --deepseek-cyan: #00F0FF;
+  --deepseek-cyan-glow: rgba(0, 240, 255, 0.25);
+  
+  --emerald-accent: #10B981;
+  --gold-accent: #FFD700;
 }
 
 * {
@@ -31,114 +33,123 @@
 html {
   scroll-behavior: smooth;
   font-family: var(--font-sans);
-  background-color: var(--bg-black);
+  background-color: var(--bg-deepseek-obsidian);
   color-scheme: dark;
 }
 
 body {
-  background-color: var(--bg-black);
-  color: #f4f4f5;
+  background-color: var(--bg-deepseek-obsidian);
+  color: #f1f5f9;
   min-height: 100vh;
   overflow-x: hidden;
-  line-height: 1.5;
+  line-height: 1.6;
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
 
-/* Apple Crisp Headings */
-h1, h2, h3, h4 {
-  font-family: var(--font-sans);
-  letter-spacing: -0.04em;
-  font-weight: 800;
+/* DeepSeek Neural Grid Background */
+.deepseek-neural-grid {
+  background-color: #050811;
+  background-image: 
+    radial-gradient(circle at 50% 20%, rgba(0, 102, 255, 0.15) 0%, transparent 60%),
+    radial-gradient(circle at 80% 60%, rgba(0, 240, 255, 0.08) 0%, transparent 50%),
+    linear-gradient(to right, rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
 }
 
-/* Apple / Vercel Glass Panel */
+/* DeepSeek Cyber Glass Panel */
 .glass-panel {
-  background: rgba(18, 18, 20, 0.7);
+  background: rgba(11, 15, 23, 0.8);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1rem;
-  transition: all 0.25s ease-in-out;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(0, 240, 255, 0.12);
+  border-radius: 1.25rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.9);
 }
 
 .glass-panel:hover {
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 20px 40px -15px rgba(255, 255, 255, 0.05);
+  border-color: rgba(0, 240, 255, 0.4);
+  box-shadow: 0 20px 45px -10px rgba(0, 102, 255, 0.25);
+  transform: translateY(-2px);
 }
 
 .glass-nav {
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(5, 8, 17, 0.85);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(0, 240, 255, 0.15);
 }
 
-/* Vercel Pure White Button */
-.vercel-white-btn {
-  background-color: #ffffff;
-  color: #000000;
-  font-weight: 700;
-  border-radius: 0.75rem;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
-}
-
-.vercel-white-btn:hover {
-  background-color: #e4e4e7;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 25px rgba(255, 255, 255, 0.3);
-}
-
-/* Vercel Dark Secondary Button */
-.vercel-dark-btn {
-  background-color: #18181b;
-  color: #f4f4f5;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  font-weight: 600;
-  border-radius: 0.75rem;
-  transition: all 0.2s ease;
-}
-
-.vercel-dark-btn:hover {
-  background-color: #27272a;
-  border-color: rgba(255, 255, 255, 0.25);
+/* DeepSeek Blue & Cyan Glow Buttons */
+.deepseek-blue-btn {
+  background: linear-gradient(135deg, #0066FF 0%, #0044BB 100%);
   color: #ffffff;
+  font-weight: 700;
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 102, 255, 0.4);
+  transition: all 0.25s ease;
 }
 
-/* Vercel High Contrast Gradient Text */
+.deepseek-blue-btn:hover {
+  background: linear-gradient(135deg, #0088FF 0%, #0066FF 100%);
+  box-shadow: 0 8px 30px rgba(0, 240, 255, 0.6);
+  transform: translateY(-1px);
+}
+
+.deepseek-cyan-btn {
+  background: linear-gradient(135deg, #00F0FF 0%, #00A8FF 100%);
+  color: #050811;
+  font-weight: 800;
+  box-shadow: 0 4px 20px rgba(0, 240, 255, 0.4);
+  transition: all 0.25s ease;
+}
+
+.deepseek-cyan-btn:hover {
+  background: linear-gradient(135deg, #38BDF8 0%, #00F0FF 100%);
+  box-shadow: 0 8px 30px rgba(0, 240, 255, 0.6);
+  transform: translateY(-1px);
+}
+
+/* DeepSeek Gradient Typography */
 .text-gradient {
-  background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #38BDF8 50%, #0066FF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.text-gradient-emerald {
-  background: linear-gradient(135deg, #ffffff 0%, #34d399 50%, #10b981 100%);
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #00F0FF 0%, #34D399 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Vercel Background Grid Pattern */
-.bg-grid-pattern {
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+/* DeepSeek AI Prompt Console Input Box */
+.deepseek-prompt-box {
+  background: rgba(15, 23, 42, 0.9);
+  border: 1.5px solid rgba(0, 240, 255, 0.3);
+  box-shadow: 0 0 25px rgba(0, 102, 255, 0.2);
+  border-radius: 1rem;
 }
 
-/* Minimalist Scrollbar */
+.deepseek-prompt-box:focus-within {
+  border-color: #00F0FF;
+  box-shadow: 0 0 35px rgba(0, 240, 255, 0.4);
+}
+
+/* Custom DeepSeek Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #000000;
+  background: #050811;
 }
 ::-webkit-scrollbar-thumb {
-  background: #27272a;
+  background: #1e293b;
   border-radius: 9999px;
+  border: 1px solid rgba(0, 240, 255, 0.2);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #52525b;
+  background: #0066FF;
 }
