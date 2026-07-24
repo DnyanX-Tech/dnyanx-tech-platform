@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { FREELANCE_SERVICES } from '../data/mockData';
-import { Calculator, CheckCircle2, Clock, Sparkles, Send, ShieldCheck, Zap, Layers } from 'lucide-react';
+import { Calculator, CheckCircle2, Clock, Sparkles, Send, ShieldCheck, Zap, Layers, ExternalLink } from 'lucide-react';
 
-export default function ServicesHub({ onSelectService, onRequestEstimate }) {
-  // Calculator State
+export default function ServicesHub({ t, currency, onSelectService, onRequestEstimate }) {
+  const rate = currency === 'INR' ? 83.5 : 1.0;
+  const symbol = currency === 'INR' ? '₹' : '$';
+
   const [projectType, setProjectType] = useState('web');
   const [scale, setScale] = useState('mvp');
   const [selectedAddons, setSelectedAddons] = useState(['auth', 'ai']);
@@ -23,7 +25,7 @@ export default function ServicesHub({ onSelectService, onRequestEstimate }) {
   ];
 
   const addonsList = [
-    { id: 'auth', name: 'Authentication & Payments (Stripe)', price: 250, days: 3 },
+    { id: 'auth', name: 'Authentication & Payments (Stripe/UPI)', price: 250, days: 3 },
     { id: 'ai', name: 'Custom AI RAG / OpenAI Agents', price: 400, days: 4 },
     { id: 'seo', name: 'SEO & Performance Optimization', price: 200, days: 2 },
     { id: 'docker', name: 'CI/CD Pipeline & Docker setup', price: 300, days: 3 },
@@ -38,7 +40,6 @@ export default function ServicesHub({ onSelectService, onRequestEstimate }) {
     }
   };
 
-  // Calculate totals
   const currentType = projectTypes.find((t) => t.id === projectType);
   const currentScale = scales.find((s) => s.id === scale);
 
@@ -48,7 +49,8 @@ export default function ServicesHub({ onSelectService, onRequestEstimate }) {
     return acc + (item ? item.price : 0);
   }, 0);
 
-  const totalPrice = Math.round(baseCalculatedPrice + addonsPrice);
+  const totalPriceUsd = baseCalculatedPrice + addonsPrice;
+  const totalPriceDisplay = Math.round(totalPriceUsd * rate);
 
   const baseCalculatedDays = currentType.baseDays * (scale === 'enterprise' ? 1.8 : scale === 'business' ? 1.3 : 1.0);
   const addonsDays = selectedAddons.reduce((acc, currId) => {
@@ -62,7 +64,7 @@ export default function ServicesHub({ onSelectService, onRequestEstimate }) {
     onRequestEstimate({
       projectType: currentType.name,
       scale: currentScale.name,
-      estimatedPrice: `$${totalPrice}`,
+      estimatedPrice: `${symbol}${totalPriceDisplay} ${currency}`,
       estimatedTimeline: `${totalDays} Days`,
       addons: selectedAddons.map(id => addonsList.find(a => a.id === id).name)
     });
@@ -80,64 +82,88 @@ export default function ServicesHub({ onSelectService, onRequestEstimate }) {
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
             Services & <span className="text-gradient">Interactive Cost Estimator</span>
           </h2>
-          <p className="text-slate-400 text-sm sm:text-base">
+          <p className="text-slate-400 text-sm sm:text-base mb-4">
             Hire DnyanX Tech engineers for custom development or calculate an instant transparent price quote for your next digital product.
           </p>
+
+          {/* Fiverr / External Freelance Links */}
+          <div className="flex items-center justify-center gap-3">
+            <a
+              href="https://fiverr.com"
+              target="_blank"
+              rel="noreferrer"
+              className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-semibold text-emerald-400 hover:border-emerald-500/40 flex items-center gap-1.5 transition-all"
+            >
+              <span>Fiverr Direct Profile</span> <ExternalLink size={12} />
+            </a>
+            <a
+              href="https://upwork.com"
+              target="_blank"
+              rel="noreferrer"
+              className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-semibold text-cyan-400 hover:border-cyan-500/40 flex items-center gap-1.5 transition-all"
+            >
+              <span>Upwork Agency Profile</span> <ExternalLink size={12} />
+            </a>
+          </div>
         </div>
 
         {/* Services Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-          {FREELANCE_SERVICES.map((srv) => (
-            <div
-              key={srv.id}
-              className={`glass-panel p-6 border-slate-800 flex flex-col justify-between relative transition-all duration-300 ${
-                srv.popular ? 'border-emerald-500/50 shadow-xl shadow-emerald-500/10' : 'hover:border-slate-700'
-              }`}
-            >
-              {srv.popular && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-emerald-500 text-slate-950 font-extrabold text-[11px] uppercase tracking-wider shadow-md">
-                  Most Popular Choice
-                </div>
-              )}
+          {FREELANCE_SERVICES.map((srv) => {
+            const rawPriceUsd = parseInt(srv.startingPrice.replace(/[^0-9]/g, '')) || 999;
+            const convertedPrice = Math.round(rawPriceUsd * rate);
 
-              <div>
-                <div className="mb-4">
-                  <h3 className="text-xl font-bold text-white mb-1">{srv.title}</h3>
-                  <p className="text-xs text-slate-400">{srv.subtitle}</p>
-                </div>
-
-                <div className="flex items-baseline gap-2 mb-6 font-mono">
-                  <span className="text-3xl font-extrabold text-white">{srv.startingPrice}</span>
-                  <span className="text-xs text-slate-400 font-sans">starting quote</span>
-                </div>
-
-                <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-300 flex items-center gap-2 mb-6">
-                  <Clock size={14} className="text-emerald-400" />
-                  <span>Est. Delivery: <strong>{srv.delivery}</strong></span>
-                </div>
-
-                {/* Features List */}
-                <div className="space-y-2.5 mb-8">
-                  {srv.features.map((feat, idx) => (
-                    <div key={idx} className="flex items-start gap-2.5 text-xs text-slate-300">
-                      <CheckCircle2 size={15} className="text-emerald-400 shrink-0 mt-0.5" />
-                      <span>{feat}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <button
-                onClick={() => onSelectService(srv)}
-                className={`w-full py-3 rounded-xl text-xs font-bold transition-all ${
-                  srv.popular ? 'emerald-glow-btn' : 'bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700'
+            return (
+              <div
+                key={srv.id}
+                className={`glass-panel p-6 border-slate-800 flex flex-col justify-between relative transition-all duration-300 ${
+                  srv.popular ? 'border-emerald-500/50 shadow-xl shadow-emerald-500/10' : 'hover:border-slate-700'
                 }`}
               >
-                Book Service Package
-              </button>
+                {srv.popular && (
+                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-emerald-500 text-slate-950 font-extrabold text-[11px] uppercase tracking-wider shadow-md">
+                    Most Popular Choice
+                  </div>
+                )}
 
-            </div>
-          ))}
+                <div>
+                  <div className="mb-4">
+                    <h3 className="text-xl font-bold text-white mb-1">{srv.title}</h3>
+                    <p className="text-xs text-slate-400">{srv.subtitle}</p>
+                  </div>
+
+                  <div className="flex items-baseline gap-2 mb-6 font-mono">
+                    <span className="text-3xl font-extrabold text-white">{symbol}{convertedPrice}</span>
+                    <span className="text-xs text-slate-400 font-sans">starting quote</span>
+                  </div>
+
+                  <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-300 flex items-center gap-2 mb-6">
+                    <Clock size={14} className="text-emerald-400" />
+                    <span>Est. Delivery: <strong>{srv.delivery}</strong></span>
+                  </div>
+
+                  <div className="space-y-2.5 mb-8">
+                    {srv.features.map((feat, idx) => (
+                      <div key={idx} className="flex items-start gap-2.5 text-xs text-slate-300">
+                        <CheckCircle2 size={15} className="text-emerald-400 shrink-0 mt-0.5" />
+                        <span>{feat}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => onSelectService(srv)}
+                  className={`w-full py-3 rounded-xl text-xs font-bold transition-all ${
+                    srv.popular ? 'emerald-glow-btn' : 'bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700'
+                  }`}
+                >
+                  {t ? t.bookPackage : "Book Package"}
+                </button>
+
+              </div>
+            );
+          })}
         </div>
 
         {/* Interactive Estimator Tool */}
@@ -156,32 +182,29 @@ export default function ServicesHub({ onSelectService, onRequestEstimate }) {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
-            {/* Options Panel (2 columns) */}
             <div className="lg:col-span-2 space-y-6">
               
-              {/* Step 1: Project Type */}
               <div>
                 <label className="block text-xs font-mono uppercase tracking-wider text-slate-400 mb-3">
                   1. Select Project Type
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-                  {projectTypes.map((t) => (
+                  {projectTypes.map((pt) => (
                     <button
-                      key={t.id}
-                      onClick={() => setProjectType(t.id)}
+                      key={pt.id}
+                      onClick={() => setProjectType(pt.id)}
                       className={`p-3 rounded-xl text-xs font-semibold border text-left transition-all ${
-                        projectType === t.id
+                        projectType === pt.id
                           ? 'bg-emerald-500/20 border-emerald-500 text-emerald-300 font-bold'
                           : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'
                       }`}
                     >
-                      {t.name}
+                      {pt.name}
                     </button>
                   ))}
                 </div>
               </div>
 
-              {/* Step 2: Scope / Scale */}
               <div>
                 <label className="block text-xs font-mono uppercase tracking-wider text-slate-400 mb-3">
                   2. Select Project Scale
@@ -204,7 +227,6 @@ export default function ServicesHub({ onSelectService, onRequestEstimate }) {
                 </div>
               </div>
 
-              {/* Step 3: Addons */}
               <div>
                 <label className="block text-xs font-mono uppercase tracking-wider text-slate-400 mb-3">
                   3. Select Additional Modules & Addons
@@ -212,6 +234,7 @@ export default function ServicesHub({ onSelectService, onRequestEstimate }) {
                 <div className="space-y-2">
                   {addonsList.map((a) => {
                     const isChecked = selectedAddons.includes(a.id);
+                    const addonDisplayPrice = Math.round(a.price * rate);
                     return (
                       <div
                         key={a.id}
@@ -231,7 +254,7 @@ export default function ServicesHub({ onSelectService, onRequestEstimate }) {
                           />
                           <span>{a.name}</span>
                         </div>
-                        <span className="text-xs font-mono text-emerald-400 font-bold">+${a.price}</span>
+                        <span className="text-xs font-mono text-emerald-400 font-bold">+{symbol}{addonDisplayPrice}</span>
                       </div>
                     );
                   })}
@@ -240,7 +263,6 @@ export default function ServicesHub({ onSelectService, onRequestEstimate }) {
 
             </div>
 
-            {/* Live Summary Card */}
             <div className="glass-panel p-6 border-slate-800 bg-slate-950 flex flex-col justify-between h-full">
               <div>
                 <h4 className="text-sm font-bold text-white mb-4 border-b border-slate-800 pb-3 flex items-center gap-2">
@@ -262,11 +284,10 @@ export default function ServicesHub({ onSelectService, onRequestEstimate }) {
                   </div>
                 </div>
 
-                {/* Estimate totals */}
                 <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 mb-6">
                   <div className="text-xs text-slate-400 mb-1">Estimated Investment</div>
                   <div className="text-3xl font-extrabold font-mono text-white text-emerald-glow mb-2">
-                    ${totalPrice} USD
+                    {symbol}{totalPriceDisplay} {currency}
                   </div>
                   <div className="text-xs text-slate-400 flex items-center gap-1.5 font-mono">
                     <Clock size={13} className="text-cyan-400" />
@@ -279,7 +300,7 @@ export default function ServicesHub({ onSelectService, onRequestEstimate }) {
                 onClick={handleApplyEstimate}
                 className="w-full emerald-glow-btn py-3.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-xl"
               >
-                <Send size={14} /> Request Quote with Estimate
+                <Send size={14} /> {t ? t.requestEstimate : "Request Quote with Estimate"}
               </button>
             </div>
 

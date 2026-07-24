@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowRight, Code, Sparkles, CheckCircle2, ShieldCheck, Zap, Terminal, ExternalLink } from 'lucide-react';
 
-export default function Hero({ onExploreStore, onHireClick }) {
+export default function Hero({ t, onExploreStore, onHireClick }) {
   const techPills = [
     { name: 'React 19', color: 'border-cyan-500/30 text-cyan-400 bg-cyan-500/10' },
     { name: 'Next.js 14', color: 'border-slate-400/30 text-slate-200 bg-slate-500/10' },
@@ -36,15 +36,13 @@ export default function Hero({ onExploreStore, onHireClick }) {
 
         {/* Main Heading */}
         <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 leading-[1.15]">
-          Architecting High-Performance <br className="hidden sm:inline" />
-          <span className="text-gradient">Software & Digital Products</span>
+          {t ? t.heroTitlePrefix : "Architecting High-Performance"} <br className="hidden sm:inline" />
+          <span className="text-gradient">{t ? t.heroTitleSuffix : "Software & Digital Products"}</span>
         </h1>
 
         {/* Subtitle */}
         <p className="max-w-3xl mx-auto text-base sm:text-lg text-slate-400 mb-10 leading-relaxed font-normal">
-          DnyanX Tech is your ultimate engineering platform. Explore production-ready 
-          <strong className="text-emerald-400 font-semibold"> DevDash Code Templates</strong>, hire top-tier 
-          <strong className="text-cyan-400 font-semibold"> Full-Stack & AI Freelance Engineers</strong>, or calculate instant quotes for custom projects.
+          {t ? t.heroSubtitle : "DnyanX Tech is your ultimate engineering platform. Explore production-ready DevDash Code Templates, hire top-tier Full-Stack & AI Freelance Engineers, or calculate instant quotes."}
         </p>
 
         {/* CTAs */}
@@ -54,7 +52,7 @@ export default function Hero({ onExploreStore, onHireClick }) {
             className="w-full sm:w-auto emerald-glow-btn px-8 py-4 rounded-xl text-sm font-bold flex items-center justify-center gap-3 group"
           >
             <Code size={18} />
-            <span>Explore DevDash Store</span>
+            <span>{t ? t.exploreStore : "Explore DevDash Store"}</span>
             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
           </button>
 
@@ -63,7 +61,7 @@ export default function Hero({ onExploreStore, onHireClick }) {
             className="w-full sm:w-auto px-8 py-4 rounded-xl text-sm font-semibold bg-slate-900/80 hover:bg-slate-800 text-slate-200 border border-slate-700 hover:border-emerald-500/50 transition-all flex items-center justify-center gap-3 backdrop-blur-md shadow-lg"
           >
             <Sparkles size={18} className="text-emerald-400" />
-            <span>Hire Freelance Devs</span>
+            <span>{t ? t.hireFreelance : "Hire Freelance Devs"}</span>
           </button>
         </div>
 

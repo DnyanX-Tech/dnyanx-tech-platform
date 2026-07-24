@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Send, MessageSquare, CheckCircle, Mail, User, DollarSign, Calendar, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-export default function ContactForm({ prefilledData }) {
+export default function ContactForm({ t, prefilledData }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -66,7 +66,7 @@ export default function ContactForm({ prefilledData }) {
               </div>
               <h3 className="text-2xl font-extrabold text-white mb-2">Inquiry Received! 🌿⚡</h3>
               <p className="text-slate-300 text-sm max-w-md mx-auto leading-relaxed mb-6">
-                Thank you for reaching out to DnyanX Tech. An lead solution architect will review your project details and respond within 12 hours.
+                Thank you for reaching out to DnyanX Tech. A lead solution architect will review your project details and respond within 12 hours.
               </p>
               <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-full border border-emerald-500/20">
                 Ticket #DNY-{Math.floor(100000 + Math.random() * 900000)} Created
@@ -75,7 +75,6 @@ export default function ContactForm({ prefilledData }) {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               
-              {/* Name & Email Row */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-xs font-mono text-slate-300 mb-2 flex items-center gap-1.5">
@@ -106,7 +105,6 @@ export default function ContactForm({ prefilledData }) {
                 </div>
               </div>
 
-              {/* Project Type & Budget Row */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-xs font-mono text-slate-300 mb-2">
@@ -142,7 +140,6 @@ export default function ContactForm({ prefilledData }) {
                 </div>
               </div>
 
-              {/* Message */}
               <div>
                 <label className="block text-xs font-mono text-slate-300 mb-2">
                   Project Brief & Requirements *
@@ -161,7 +158,7 @@ export default function ContactForm({ prefilledData }) {
                 type="submit"
                 className="w-full emerald-glow-btn py-4 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-xl"
               >
-                <Send size={16} /> Submit Project Inquiry
+                <Send size={16} /> {t ? t.submitInquiry : "Submit Project Inquiry"}
               </button>
 
             </form>

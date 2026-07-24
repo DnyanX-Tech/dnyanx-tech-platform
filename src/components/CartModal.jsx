@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { X, Trash2, ShoppingBag, CheckCircle, ArrowRight, Tag, ShieldCheck } from 'lucide-react';
+import { X, Trash2, ShoppingBag, CheckCircle, ArrowRight, Tag, ShieldCheck, QrCode } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-export default function CartModal({ isOpen, onClose, cartItems, onRemoveItem, onClearCart }) {
+export default function CartModal({ isOpen, onClose, cartItems, currency, onRemoveItem, onClearCart, onOpenUpi }) {
   const [promoCode, setPromoCode] = useState('');
   const [discountPercent, setDiscountPercent] = useState(0);
   const [promoApplied, setPromoApplied] = useState(false);
@@ -10,7 +10,10 @@ export default function CartModal({ isOpen, onClose, cartItems, onRemoveItem, on
 
   if (!isOpen) return null;
 
-  const subtotal = cartItems.reduce((acc, item) => acc + item.price, 0);
+  const rate = currency === 'INR' ? 83.5 : 1.0;
+  const symbol = currency === 'INR' ? '₹' : '$';
+
+  const subtotal = cartItems.reduce((acc, item) => acc + (item.price * rate), 0);
   const discountAmount = (subtotal * discountPercent) / 100;
   const total = Math.max(0, subtotal - discountAmount);
 
@@ -25,18 +28,17 @@ export default function CartModal({ isOpen, onClose, cartItems, onRemoveItem, on
   };
 
   const handleCheckout = () => {
-    // Trigger celebratory confetti effect
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 }
-    });
-    setCheckoutComplete(true);
-    setTimeout(() => {
-      onClearCart();
-      setCheckoutComplete(false);
-      onClose();
-    }, 2500);
+    if (currency === 'INR') {
+      onOpenUpi();
+    } else {
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+      setCheckoutComplete(true);
+      setTimeout(() => {
+        onClearCart();
+        setCheckoutComplete(false);
+        onClose();
+      }, 2500);
+    }
   };
 
   return (
@@ -90,7 +92,7 @@ export default function CartModal({ isOpen, onClose, cartItems, onRemoveItem, on
                     <span className="text-[10px] font-mono text-cyan-400">{item.category}</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="text-sm font-mono font-bold text-white">${item.price}</span>
+                    <span className="text-sm font-mono font-bold text-white">{symbol}{Math.round(item.price * rate)}</span>
                     <button
                       onClick={() => onRemoveItem(idx)}
                       className="p-1.5 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors"
@@ -131,15 +133,14 @@ export default function CartModal({ isOpen, onClose, cartItems, onRemoveItem, on
             {promoApplied && (
               <div className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-xs text-emerald-300 mb-4 flex items-center justify-between">
                 <span>DNYANX20 Applied (20% Off)</span>
-                <span className="font-mono font-bold">-${discountAmount.toFixed(2)}</span>
+                <span className="font-mono font-bold">-{symbol}{discountAmount.toFixed(2)}</span>
               </div>
             )}
 
-            {/* Total Breakdown */}
             <div className="space-y-2 text-xs mb-6 font-mono">
               <div className="flex justify-between text-slate-400">
                 <span>Subtotal</span>
-                <span className="text-white">${subtotal.toFixed(2)}</span>
+                <span className="text-white">{symbol}{subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-slate-400">
                 <span>Instant Digital Delivery</span>
@@ -147,11 +148,10 @@ export default function CartModal({ isOpen, onClose, cartItems, onRemoveItem, on
               </div>
               <div className="flex justify-between text-base font-bold text-white pt-2 border-t border-slate-800">
                 <span>Total Amount</span>
-                <span className="text-emerald-glow">${total.toFixed(2)} USD</span>
+                <span className="text-emerald-glow">{symbol}{total.toFixed(2)} {currency}</span>
               </div>
             </div>
 
-            {/* Guarantee badge */}
             <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-400 mb-4 font-mono">
               <ShieldCheck size={14} className="text-emerald-400" />
               <span>Instant GitHub repository access & lifetime updates</span>
@@ -161,8 +161,16 @@ export default function CartModal({ isOpen, onClose, cartItems, onRemoveItem, on
               onClick={handleCheckout}
               className="w-full emerald-glow-btn py-3.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-xl"
             >
-              <span>Complete Instant Order</span>
-              <ArrowRight size={16} />
+              {currency === 'INR' ? (
+                <>
+                  <QrCode size={16} /> Pay via UPI (GPay / PhonePe / Paytm)
+                </>
+              ) : (
+                <>
+                  <span>Complete Stripe Order</span>
+                  <ArrowRight size={16} />
+                </>
+              )}
             </button>
           </div>
         )}

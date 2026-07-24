@@ -3,7 +3,7 @@ import { DEVDASH_ITEMS } from '../data/mockData';
 import CodePreviewModal from './CodePreviewModal';
 import { ShoppingBag, Search, Eye, Star, Check, Sparkles, Filter, Code2, Tag } from 'lucide-react';
 
-export default function DevDashStore({ onAddToCart }) {
+export default function DevDashStore({ t, currency, onAddToCart }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [previewItem, setPreviewItem] = useState(null);
@@ -11,11 +11,14 @@ export default function DevDashStore({ onAddToCart }) {
 
   const categories = ['All', 'SaaS Boilerplates', 'Full Stack', 'UI Kits', 'Mobile Kits'];
 
+  const rate = currency === 'INR' ? 83.5 : 1.0;
+  const symbol = currency === 'INR' ? '₹' : '$';
+
   const filteredItems = DEVDASH_ITEMS.filter((item) => {
     const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory;
     const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          item.tech.some(t => t.toLowerCase().includes(searchTerm.toLowerCase()));
+                          item.tech.some(tk => tk.toLowerCase().includes(searchTerm.toLowerCase()));
     return matchesCategory && matchesSearch;
   });
 
@@ -52,7 +55,7 @@ export default function DevDashStore({ onAddToCart }) {
             <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
             <input
               type="text"
-              placeholder="Search templates, tech, or kits..."
+              placeholder={t.searchPlaceholder}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 placeholder-slate-500 text-xs focus:outline-none focus:border-emerald-500 transition-colors"
@@ -79,95 +82,95 @@ export default function DevDashStore({ onAddToCart }) {
         </div>
 
         {/* Store Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-          {filteredItems.map((item) => (
-            <div 
-              key={item.id}
-              className="glass-panel p-6 border-slate-800 flex flex-col justify-between hover:border-cyan-500/40 transition-all duration-300 relative group"
-            >
-              <div>
-                {/* Header Row: Badge & Rating */}
-                <div className="flex items-center justify-between gap-2 mb-4">
-                  <span className="tag-badge-cyan">
-                    <Tag size={10} /> {item.category}
-                  </span>
-                  <div className="flex items-center gap-2">
-                    {item.badge && (
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                        {item.badge}
-                      </span>
-                    )}
-                    <div className="flex items-center gap-1 text-xs font-mono font-bold text-amber-400 bg-slate-900 px-2 py-0.5 rounded-md border border-slate-800">
-                      <Star size={12} className="fill-amber-400" />
-                      <span>{item.rating}</span>
-                      <span className="text-slate-500">({item.reviews})</span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {filteredItems.map((item) => {
+            const displayPrice = Math.round(item.price * rate);
+            const displayOriginal = Math.round(item.originalPrice * rate);
+
+            return (
+              <div 
+                key={item.id}
+                className="glass-panel p-6 border-slate-800 flex flex-col justify-between hover:border-cyan-500/40 transition-all duration-300 relative group"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-4">
+                    <span className="tag-badge-cyan">
+                      <Tag size={10} /> {item.category}
+                    </span>
+                    <div className="flex items-center gap-2">
+                      {item.badge && (
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                          {item.badge}
+                        </span>
+                      )}
+                      <div className="flex items-center gap-1 text-xs font-mono font-bold text-amber-400 bg-slate-900 px-2 py-0.5 rounded-md border border-slate-800">
+                        <Star size={12} className="fill-amber-400" />
+                        <span>{item.rating}</span>
+                        <span className="text-slate-500">({item.reviews})</span>
+                      </div>
                     </div>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-slate-400 text-xs sm:text-sm leading-relaxed mb-6">
+                    {item.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-1.5 mb-6">
+                    {item.tech.map((tk, idx) => (
+                      <span key={idx} className="px-2 py-0.5 rounded text-[11px] font-mono bg-slate-900 text-cyan-300 border border-slate-800">
+                        {tk}
+                      </span>
+                    ))}
                   </div>
                 </div>
 
-                {/* Title & Description */}
-                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">
-                  {item.title}
-                </h3>
-                <p className="text-slate-400 text-xs sm:text-sm leading-relaxed mb-6">
-                  {item.description}
-                </p>
+                <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between gap-3">
+                  <div className="flex items-baseline gap-2 font-mono">
+                    <span className="text-2xl font-extrabold text-white">{symbol}{displayPrice}</span>
+                    <span className="text-xs text-slate-500 line-through">{symbol}{displayOriginal}</span>
+                  </div>
 
-                {/* Tech Pills */}
-                <div className="flex flex-wrap gap-1.5 mb-6">
-                  {item.tech.map((t, idx) => (
-                    <span key={idx} className="px-2 py-0.5 rounded text-[11px] font-mono bg-slate-900 text-cyan-300 border border-slate-800">
-                      {t}
-                    </span>
-                  ))}
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setPreviewItem(item)}
+                      className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 flex items-center gap-1.5 transition-all"
+                    >
+                      <Eye size={14} className="text-cyan-400" />
+                      <span>{t.previewSnippet}</span>
+                    </button>
+
+                    <button
+                      onClick={() => handleAdd(item)}
+                      disabled={addedItems[item.id]}
+                      className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
+                        addedItems[item.id]
+                          ? 'bg-emerald-500 text-slate-950'
+                          : 'emerald-glow-btn'
+                      }`}
+                    >
+                      {addedItems[item.id] ? (
+                        <>
+                          <Check size={14} /> {t.added}
+                        </>
+                      ) : (
+                        <>
+                          <ShoppingBag size={14} /> {t.addToCart}
+                        </>
+                      )}
+                    </button>
+                  </div>
                 </div>
+
               </div>
-
-              {/* Price & Action Buttons */}
-              <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between gap-3">
-                <div className="flex items-baseline gap-2 font-mono">
-                  <span className="text-2xl font-extrabold text-white">${item.price}</span>
-                  <span className="text-xs text-slate-500 line-through">${item.originalPrice}</span>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setPreviewItem(item)}
-                    className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 flex items-center gap-1.5 transition-all"
-                  >
-                    <Eye size={14} className="text-cyan-400" />
-                    <span>Preview Snippet</span>
-                  </button>
-
-                  <button
-                    onClick={() => handleAdd(item)}
-                    disabled={addedItems[item.id]}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
-                      addedItems[item.id]
-                        ? 'bg-emerald-500 text-slate-950'
-                        : 'emerald-glow-btn'
-                    }`}
-                  >
-                    {addedItems[item.id] ? (
-                      <>
-                        <Check size={14} /> Added!
-                      </>
-                    ) : (
-                      <>
-                        <ShoppingBag size={14} /> Add to Cart
-                      </>
-                    )}
-                  </button>
-                </div>
-              </div>
-
-            </div>
-          ))}
+            );
+          })}
         </div>
 
       </div>
 
-      {/* Code Preview Modal */}
       {previewItem && (
         <CodePreviewModal
           item={previewItem}

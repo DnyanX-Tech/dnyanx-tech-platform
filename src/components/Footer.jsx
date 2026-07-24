@@ -1,7 +1,7 @@
 import React from 'react';
 import { Github, Globe, ExternalLink, Mail, Heart, Sparkles } from 'lucide-react';
 
-export default function Footer() {
+export default function Footer({ t }) {
   return (
     <footer className="bg-slate-950 border-t border-slate-800/80 pt-16 pb-12 text-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -16,7 +16,7 @@ export default function Footer() {
               <span>🌿⚡</span>
             </div>
             <p className="text-slate-400 leading-relaxed text-xs">
-              Official All-in-One Platform for DnyanX Tech Portfolio, DevDash Code Store & Freelancing Services.
+              {t ? t.tagline : "Official Platform for Portfolio, DevDash Code Store & Freelancing Services."}
             </p>
             <div className="flex items-center gap-3 pt-2">
               <a
@@ -47,7 +47,11 @@ export default function Footer() {
               <li><a href="#hero" className="hover:text-emerald-400 transition-colors">Home & Stats</a></li>
               <li><a href="#portfolio" className="hover:text-emerald-400 transition-colors">Engineering Portfolio</a></li>
               <li><a href="#store" className="hover:text-emerald-400 transition-colors">DevDash Code Store</a></li>
+              <li><a href="#cardGen" className="hover:text-emerald-400 transition-colors">AI Digital Card</a></li>
+              <li><a href="#sandbox" className="hover:text-emerald-400 transition-colors">Live Sandbox</a></li>
               <li><a href="#services" className="hover:text-emerald-400 transition-colors">Services & Estimator</a></li>
+              <li><a href="#crm" className="hover:text-emerald-400 transition-colors">ClientFlow CRM</a></li>
+              <li><a href="#status" className="hover:text-emerald-400 transition-colors">Platform Status</a></li>
               <li><a href="#contact" className="hover:text-emerald-400 transition-colors">Contact Engineers</a></li>
             </ul>
           </div>

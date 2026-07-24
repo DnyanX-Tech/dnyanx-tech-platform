@@ -3,7 +3,7 @@ import { PORTFOLIO_PROJECTS } from '../data/mockData';
 import CaseStudyModal from './CaseStudyModal';
 import { Code, ExternalLink, Github, Sparkles, Layers, Star, GitFork, ArrowUpRight } from 'lucide-react';
 
-export default function Portfolio() {
+export default function Portfolio({ t }) {
   const [activeCategory, setActiveCategory] = useState('All');
   const [selectedProject, setSelectedProject] = useState(null);
 
@@ -55,7 +55,6 @@ export default function Portfolio() {
               className="glass-panel group overflow-hidden border-slate-800 flex flex-col justify-between hover:border-emerald-500/40 transition-all duration-300"
             >
               <div>
-                {/* Image header */}
                 <div className="relative h-52 w-full overflow-hidden bg-slate-900">
                   <img
                     src={project.image}
@@ -64,7 +63,6 @@ export default function Portfolio() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
                   
-                  {/* Category & Badge Overlay */}
                   <div className="absolute top-4 left-4 flex items-center gap-2">
                     <span className="tag-badge bg-slate-950/80 border-slate-700">
                       {project.category}
@@ -76,14 +74,12 @@ export default function Portfolio() {
                     )}
                   </div>
 
-                  {/* Stars / Forks Counter */}
                   <div className="absolute top-4 right-4 flex items-center gap-2 text-[11px] font-mono font-bold bg-slate-950/80 px-2.5 py-1 rounded-lg border border-slate-800 text-slate-300">
                     <span className="flex items-center gap-1"><Star size={12} className="text-amber-400 fill-amber-400" /> {project.stats.stars}</span>
                     <span className="flex items-center gap-1"><GitFork size={12} className="text-cyan-400" /> {project.stats.forks}</span>
                   </div>
                 </div>
 
-                {/* Content Body */}
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors">
                     {project.title}
@@ -92,7 +88,6 @@ export default function Portfolio() {
                     {project.description}
                   </p>
 
-                  {/* Tech stack tags */}
                   <div className="flex flex-wrap gap-1.5 mb-6">
                     {project.tags.map((tag, idx) => (
                       <span key={idx} className="px-2 py-0.5 rounded text-[11px] font-mono bg-slate-900 text-slate-300 border border-slate-800">
@@ -103,7 +98,6 @@ export default function Portfolio() {
                 </div>
               </div>
 
-              {/* Card Footer Actions */}
               <div className="px-6 pb-6 pt-2 border-t border-slate-800/60 flex items-center justify-between gap-2">
                 <button
                   onClick={() => setSelectedProject(project)}
@@ -140,7 +134,6 @@ export default function Portfolio() {
 
       </div>
 
-      {/* Case Study Modal */}
       {selectedProject && (
         <CaseStudyModal
           project={selectedProject}
