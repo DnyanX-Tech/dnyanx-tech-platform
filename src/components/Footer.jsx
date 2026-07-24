@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Globe, ExternalLink, Mail, Heart, Sparkles } from 'lucide-react';
+import { Github, Globe, ExternalLink, Mail, MapPin, Sparkles } from 'lucide-react';
 
 export default function Footer({ t }) {
   return (
@@ -10,14 +10,34 @@ export default function Footer({ t }) {
           
           {/* Brand Column */}
           <div className="md:col-span-1 space-y-4">
-            <div className="flex items-center gap-2 font-extrabold text-lg">
-              <span className="text-white">DnyanX</span>
-              <span className="text-gradient">Tech</span>
-              <span>🌿⚡</span>
+            <div>
+              <div className="flex items-center gap-2 font-extrabold text-lg">
+                <span className="text-white">DnyanX</span>
+                <span className="text-gradient">Tech</span>
+                <span>🌿⚡</span>
+              </div>
+              <p className="text-[11px] font-mono text-emerald-400 font-semibold mt-0.5">
+                {t ? t.slogan : "DnyanX Tech: One Human. Green Future."}
+              </p>
             </div>
+
             <p className="text-slate-400 leading-relaxed text-xs">
-              {t ? t.tagline : "Official Platform for Portfolio, DevDash Code Store & Freelancing Services."}
+              {t ? t.tagline : "WorldFolioX & DevDash Integrated Platform for Portfolio, Code Store & Freelancing Services."}
             </p>
+
+            <div className="space-y-1.5 text-xs text-slate-400 font-mono pt-1">
+              <div className="flex items-center gap-1.5 text-slate-300">
+                <Mail size={13} className="text-emerald-400" />
+                <a href="mailto:dnyanx.tech.official@gmail.com" className="hover:text-emerald-400 transition-colors">
+                  dnyanx.tech.official@gmail.com
+                </a>
+              </div>
+              <div className="flex items-center gap-1.5 text-slate-300">
+                <MapPin size={13} className="text-cyan-400" />
+                <span>{t ? t.location : "Ahilyanagar, Maharashtra, India"}</span>
+              </div>
+            </div>
+
             <div className="flex items-center gap-3 pt-2">
               <a
                 href="https://github.com/dnyanx-tech"
