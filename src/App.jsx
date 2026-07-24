@@ -13,6 +13,18 @@ import ContactForm from './components/ContactForm';
 import CartModal from './components/CartModal';
 import UpiPaymentModal from './components/UpiPaymentModal';
 import Footer from './components/Footer';
+
+// WorldFolio X Specification Modules
+import AiChatbot from './components/AiChatbot';
+import VoiceController from './components/VoiceController';
+import GithubStatsWidget from './components/GithubStatsWidget';
+import TimeTravelSlider from './components/TimeTravelSlider';
+import CompetitorVanquisher from './components/CompetitorVanquisher';
+import TrustMap from './components/TrustMap';
+import RpgPowerMeter from './components/RpgPowerMeter';
+import AutoBragReel from './components/AutoBragReel';
+import Ar3dCard from './components/Ar3dCard';
+
 import { TRANSLATIONS } from './data/translations';
 import confetti from 'canvas-confetti';
 
@@ -21,6 +33,7 @@ export default function App() {
   const [currency, setCurrency] = useState('USD');
   const [theme, setTheme] = useState('dark');
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [xpScore, setXpScore] = useState(350);
 
   const [activeTab, setActiveTab] = useState('hero');
   const [cartOpen, setCartOpen] = useState(false);
@@ -50,6 +63,24 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Quantum Entanglement Cross-Tab Synchronization (BroadcastChannel)
+  useEffect(() => {
+    if ('BroadcastChannel' in window) {
+      const channel = new BroadcastChannel('dnyanx_quantum_channel');
+      channel.onmessage = (event) => {
+        alert(`⚛️ QUANTUM ENTANGLEMENT: Spooky Action At A Distance detected from Tab #${event.data.tabId}! Action: ${event.data.action}`);
+      };
+      return () => channel.close();
+    }
+  }, []);
+
+  const triggerQuantumSync = (actionName) => {
+    if ('BroadcastChannel' in window) {
+      const channel = new BroadcastChannel('dnyanx_quantum_channel');
+      channel.postMessage({ tabId: Math.floor(Math.random() * 1000), action: actionName });
+    }
+  };
+
   // Konami Code Easter Egg (Up Up Down Down Left Right Left Right B A)
   useEffect(() => {
     const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
@@ -62,6 +93,7 @@ export default function App() {
           confetti({ particleCount: 150, spread: 100, origin: { y: 0.5 } });
           alert("🎉 KONAMI CODE UNLOCKED! Activated Quantum Cyberpunk Mode 🌿⚡");
           setTheme('quantum');
+          triggerQuantumSync("Konami Quantum Mode Unlocked");
           konamiIndex = 0;
         }
       } else {
@@ -81,8 +113,13 @@ export default function App() {
     }
   }, [cartItems]);
 
+  const addXp = (amount) => {
+    setXpScore((prev) => prev + amount);
+  };
+
   const handleAddToCart = (item) => {
     setCartItems((prev) => [...prev, item]);
+    addXp(50);
   };
 
   const handleRemoveFromCart = (index) => {
@@ -103,22 +140,32 @@ export default function App() {
     });
     setActiveTab('contact');
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    addXp(30);
   };
 
   const handleRequestEstimate = (estimateData) => {
     setPrefilledContactData(estimateData);
     setActiveTab('contact');
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    addXp(40);
+  };
+
+  const handleNavSection = (id) => {
+    setActiveTab(id);
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <div className={`min-h-screen ${theme === 'quantum' ? 'bg-slate-950 ring-2 ring-emerald-500' : 'bg-slate-950'} text-slate-100 flex flex-col font-sans relative`}>
+    <div className={`min-h-screen ${theme === 'quantum' ? 'bg-slate-950 ring-2 ring-emerald-500' : 'bg-slate-950'} text-slate-100 flex flex-col font-sans relative selection:bg-emerald-500 selection:text-slate-950`}>
       
-      {/* Scroll Progress Bar */}
+      {/* Top Scroll Progress Bar */}
       <div 
-        className="fixed top-0 left-0 h-1 bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-500 z-50 transition-all duration-150"
+        className="fixed top-0 left-0 h-1 bg-gradient-to-r from-emerald-400 via-yellow-400 to-cyan-400 z-50 transition-all duration-150 shadow-lg shadow-emerald-500/50"
         style={{ width: `${scrollProgress}%` }}
       />
+
+      {/* RPG Developer Power Meter Badge */}
+      <RpgPowerMeter xpScore={xpScore} />
 
       {/* Top Countdown Offer Banner */}
       <LiveTimerBanner t={t} />
@@ -143,15 +190,11 @@ export default function App() {
         
         <Hero
           t={t}
-          onExploreStore={() => {
-            setActiveTab('store');
-            document.getElementById('store')?.scrollIntoView({ behavior: 'smooth' });
-          }}
-          onHireClick={() => {
-            setActiveTab('services');
-            document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
-          }}
+          onExploreStore={() => handleNavSection('store')}
+          onHireClick={() => handleNavSection('services')}
         />
+
+        <GithubStatsWidget />
 
         <Portfolio t={t} />
 
@@ -163,7 +206,15 @@ export default function App() {
 
         <DigitalCardGenerator t={t} />
 
+        <Ar3dCard />
+
         <CodeSandbox t={t} />
+
+        <TimeTravelSlider />
+
+        <CompetitorVanquisher />
+
+        <TrustMap />
 
         <ServicesHub
           t={t}
@@ -175,6 +226,8 @@ export default function App() {
         <ClientFlowCRM t={t} />
 
         <StatusTracker t={t} />
+
+        <AutoBragReel />
 
         <ContactForm t={t} prefilledData={prefilledContactData} />
 
@@ -200,6 +253,15 @@ export default function App() {
         onClose={() => setUpiOpen(false)}
         totalInr={cartItems.reduce((acc, i) => acc + i.price, 0) * 83.5}
         items={cartItems}
+      />
+
+      {/* AI Assistant Chatbot */}
+      <AiChatbot onTriggerAction={handleNavSection} />
+
+      {/* Voice Control Navigation */}
+      <VoiceController
+        onNavigate={handleNavSection}
+        onToggleTheme={() => setTheme(theme === 'dark' ? 'quantum' : 'dark')}
       />
 
       {/* Footer */}
