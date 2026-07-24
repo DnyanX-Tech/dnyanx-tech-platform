@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* DnyanX Tech Platform - Premium Design System */
 
 :root {
@@ -5,17 +9,15 @@
   --font-mono: 'JetBrains Mono', monospace;
 
   /* Color Palette */
-  --bg-dark: #090d16;
+  --bg-dark: #020617;
   --bg-card: rgba(15, 23, 42, 0.75);
-  --bg-card-hover: rgba(30, 41, 59, 0.85);
-  --border-glow: rgba(16, 185, 129, 0.25);
+  --border-glow: rgba(0, 255, 102, 0.3);
   --border-card: rgba(255, 255, 255, 0.08);
 
-  --emerald-main: #10b981;
-  --emerald-glow: rgba(16, 185, 129, 0.4);
-  --cyber-teal: #06b6d4;
-  --neon-purple: #8b5cf6;
-  --accent-amber: #f59e0b;
+  --emerald-main: #00FF66;
+  --emerald-glow: rgba(0, 255, 102, 0.4);
+  --cyber-gold: #FFD700;
+  --cyber-teal: #06B6D4;
 }
 
 * {
@@ -31,15 +33,10 @@ html {
 
 body {
   background-color: var(--bg-dark);
-  color: #f1f5f9;
+  color: #f8fafc;
   min-height: 100vh;
   overflow-x: hidden;
   line-height: 1.6;
-}
-
-/* Typography Utility */
-.font-mono {
-  font-family: var(--font-mono);
 }
 
 /* Glassmorphism & Background Glows */
@@ -53,45 +50,45 @@ body {
 }
 
 .glass-panel:hover {
-  border-color: rgba(16, 185, 129, 0.35);
-  box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.15);
+  border-color: rgba(0, 255, 102, 0.4);
+  box-shadow: 0 10px 30px -10px rgba(0, 255, 102, 0.2);
 }
 
 .glass-nav {
-  background: rgba(9, 13, 22, 0.85);
+  background: rgba(2, 6, 23, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* Gradients & Text Glows */
 .text-gradient {
-  background: linear-gradient(135deg, #34d399 0%, #38bdf8 50%, #a78bfa 100%);
+  background: linear-gradient(135deg, #00FF66 0%, #38bdf8 50%, #FFD700 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .text-emerald-glow {
-  color: #34d399;
-  text-shadow: 0 0 15px rgba(52, 211, 153, 0.4);
+  color: #00FF66;
+  text-shadow: 0 0 15px rgba(0, 255, 102, 0.4);
 }
 
 .bg-gradient-radial {
-  background: radial-gradient(circle at 50% 20%, rgba(16, 185, 129, 0.15) 0%, rgba(6, 182, 212, 0.08) 45%, transparent 70%);
+  background: radial-gradient(circle at 50% 20%, rgba(0, 255, 102, 0.15) 0%, rgba(6, 182, 212, 0.08) 45%, transparent 70%);
 }
 
 .emerald-glow-btn {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  color: #041f17;
+  background: linear-gradient(135deg, #00FF66 0%, #059669 100%);
+  color: #020617;
   font-weight: 700;
-  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 255, 102, 0.4);
   transition: all 0.25s ease;
 }
 
 .emerald-glow-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(16, 185, 129, 0.6);
-  background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+  box-shadow: 0 8px 30px rgba(0, 255, 102, 0.6);
+  background: linear-gradient(135deg, #34d399 0%, #00FF66 100%);
 }
 
 /* Animations */
@@ -110,28 +107,19 @@ body {
   animation: pulseGlow 4s infinite ease-in-out;
 }
 
-@keyframes floatSlow {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-}
-
-.animate-float {
-  animation: floatSlow 5s infinite ease-in-out;
-}
-
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #070a11;
+  background: #020617;
 }
 ::-webkit-scrollbar-thumb {
   background: #1e293b;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #10b981;
+  background: #00FF66;
 }
 
 /* Badge tags */
@@ -143,24 +131,23 @@ body {
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 600;
-  background: rgba(16, 185, 129, 0.1);
-  color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.25);
+  background: rgba(0, 255, 102, 0.1);
+  color: #00FF66;
+  border: 1px solid rgba(0, 255, 102, 0.3);
 }
 
 .tag-badge-cyan {
   background: rgba(6, 182, 212, 0.1);
   color: #38bdf8;
-  border: 1px solid rgba(6, 182, 212, 0.25);
+  border: 1px solid rgba(6, 182, 212, 0.3);
 }
 
 .tag-badge-purple {
   background: rgba(139, 92, 246, 0.1);
   color: #c084fc;
-  border: 1px solid rgba(139, 92, 246, 0.25);
+  border: 1px solid rgba(139, 92, 246, 0.3);
 }
 
-/* Modal Animations */
 @keyframes modalFadeIn {
   from {
     opacity: 0;
