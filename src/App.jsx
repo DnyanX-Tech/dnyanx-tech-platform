@@ -28,6 +28,9 @@ import PersonalJourney from './components/PersonalJourney';
 import QrMenuProTool from './components/QrMenuProTool';
 import DigiCardProTool from './components/DigiCardProTool';
 
+// Google AdSense Banner Component
+import AdBanner from './components/AdBanner';
+
 // UI Enhancements: Glowing Cursor
 import CustomGlowingCursor from './components/CustomGlowingCursor';
 
@@ -219,6 +222,8 @@ export default function App() {
           onAddToCart={handleAddToCart}
         />
 
+        <AdBanner slot="1234567890" />
+
         <DigitalCardGenerator t={t} />
 
         <Ar3dCard />
@@ -247,6 +252,8 @@ export default function App() {
         <StatusTracker t={t} />
 
         <AutoBragReel />
+
+        <AdBanner slot="9876543210" />
 
         <ContactForm t={t} prefilledData={prefilledContactData} />
 
