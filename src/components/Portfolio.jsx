@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PORTFOLIO_PROJECTS } from '../data/mockData';
 import CaseStudyModal from './CaseStudyModal';
-import { Code, ExternalLink, Github, Sparkles, Layers, Star, GitFork, ArrowUpRight } from 'lucide-react';
+import { Code, Sparkles, Layers, Star, GitFork, ArrowUpRight, Github, ShoppingBag, LayoutDashboard } from 'lucide-react';
 
 export default function Portfolio({ t }) {
   const [activeCategory, setActiveCategory] = useState('All');
@@ -12,6 +12,12 @@ export default function Portfolio({ t }) {
   const filteredProjects = activeCategory === 'All'
     ? PORTFOLIO_PROJECTS
     : PORTFOLIO_PROJECTS.filter(p => p.category === activeCategory);
+
+  const handleImageError = (e, title) => {
+    // Fallback vector canvas when external image fails to load
+    e.target.onerror = null;
+    e.target.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'><rect width='100%' height='100%' fill='%23050811'/><path d='M0 0l800 400M800 0L0 400' stroke='%2310b981' stroke-width='1' opacity='0.1'/><circle cx='400' cy='200' r='120' fill='%230066ff' opacity='0.15' filter='blur(20px)'/><text x='50%' y='48%' font-family='sans-serif' font-weight='800' font-size='26' fill='%2322d3ee' text-anchor='middle'>" + encodeURIComponent(title) + "</text><text x='50%' y='60%' font-family='monospace' font-size='14' fill='%2310b981' text-anchor='middle'>⚡ DNYANX TECH PLATFORM DEMO</text></svg>";
+  };
 
   return (
     <section id="portfolio" className="py-20 relative border-t border-slate-800/80 bg-slate-950">
@@ -55,10 +61,11 @@ export default function Portfolio({ t }) {
               className="glass-panel group overflow-hidden border-slate-800 flex flex-col justify-between hover:border-emerald-500/40 transition-all duration-300"
             >
               <div>
-                <div className="relative h-52 w-full overflow-hidden bg-slate-900">
+                <div className="relative h-56 w-full overflow-hidden bg-slate-900">
                   <img
                     src={project.image}
                     alt={project.title}
+                    onError={(e) => handleImageError(e, project.title)}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />

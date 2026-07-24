@@ -27,7 +27,7 @@ export const PORTFOLIO_PROJECTS = [
     liveUrl: "https://dnyanx-tech.github.io/dnyanx-tech-platform/#portfolio",
     githubUrl: "https://github.com/dnyanx-tech",
     featured: true,
-    image: "https://images.unsplash.com/photo-1556742049-0a67daf40955?auto=format&fit=crop&w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=1200&q=80",
     caseStudy: {
       challenge: "High traffic flash sales were causing database lockouts on traditional REST backends.",
       solution: "Migrated to Next.js App Router with optimistic UI state and Redis rate limiting.",
@@ -175,7 +175,7 @@ export default function Header({ title, onBack }) {
       <Text className="text-lg font-bold text-white">{title}</Text>
     </View>
   );
-}`
+} me`
   }
 ];
 
