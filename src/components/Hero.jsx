@@ -51,21 +51,30 @@ export default function Hero({ t, onExploreStore, onHireClick }) {
   ];
 
   return (
-    <section id="hero" className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-gradient-radial">
+    <section id="hero" className="relative pt-36 pb-20 md:pt-44 md:pb-28 overflow-hidden bg-gradient-radial">
       {/* Glow Orbs */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none animate-pulse-glow" />
       <div className="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         
-        {/* Speed-Run Timer Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border-emerald-500/40 mb-6 text-xs sm:text-sm font-medium text-emerald-300 shadow-2xl">
-          <Timer size={16} className="text-emerald-400 animate-spin" />
-          <span>⚡ Speed-Run Dev: Built & Deployed in 01h : 48m</span>
+        {/* Official Gold & Emerald Emblem Badge */}
+        <div className="flex flex-col items-center justify-center mb-6">
+          <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full p-1 bg-gradient-to-tr from-amber-400 via-emerald-400 to-amber-500 shadow-2xl shadow-emerald-500/30 hover:scale-105 transition-transform duration-300">
+            <img 
+              src="./dnyanx-logo.svg" 
+              alt="DnyanX Tech Universal Emblem" 
+              className="w-full h-full object-contain rounded-full bg-slate-950 p-1"
+            />
+          </div>
+          <div className="mt-3 inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel border-emerald-500/40 text-xs font-semibold text-emerald-300 shadow-xl">
+            <Timer size={14} className="text-emerald-400 animate-spin" />
+            <span>⚡ Built & Deployed in 01h : 48m</span>
+          </div>
         </div>
 
         {/* Dynamic Typing Title */}
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 leading-[1.15]">
+        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white mb-6 leading-[1.15]">
           DnyanX Tech: One Human. <br className="hidden sm:inline" />
           <span className="text-gradient min-h-[70px] inline-block">
             {typedText}<span className="animate-pulse">|</span>
@@ -74,14 +83,14 @@ export default function Hero({ t, onExploreStore, onHireClick }) {
 
         {/* Subtitle */}
         <p className="max-w-3xl mx-auto text-base sm:text-lg text-slate-400 mb-10 leading-relaxed font-normal">
-          This entire SaaS platform was built, coded & deployed in record speed. Explore production-ready DevDash Code Templates, hire top-tier Full-Stack & AI Freelance Engineers, or calculate instant quotes.
+          Official All-in-One Platform for DnyanX Tech Portfolio, DevDash Code Store & Freelancing Services. Discover premium SaaS code templates, hire expert full-stack & AI developers, or request custom quotes.
         </p>
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
           <button
             onClick={onExploreStore}
-            className="w-full sm:w-auto emerald-glow-btn px-8 py-4 rounded-xl text-sm font-bold flex items-center justify-center gap-3 group"
+            className="w-full sm:w-auto emerald-glow-btn px-8 py-4 rounded-xl text-sm font-bold flex items-center justify-center gap-3 group shadow-2xl"
           >
             <Code size={18} />
             <span>Explore DevDash Store</span>

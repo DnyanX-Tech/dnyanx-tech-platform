@@ -76,23 +76,24 @@ export default function Navbar({
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'glass-nav py-2.5 shadow-2xl' : 'bg-slate-950/80 backdrop-blur-xl py-4'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         
-        {/* Brand Logo */}
+        {/* Official DnyanX Tech Circular Emblem Logo */}
         <div 
           onClick={() => handleNavClick('hero')} 
           className="flex items-center gap-3 cursor-pointer group"
         >
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-400 via-teal-400 to-amber-400 p-0.5 shadow-xl shadow-emerald-500/20 group-hover:scale-105 transition-transform duration-300">
-            <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center font-extrabold text-emerald-400 text-sm">
-              ⚡
-            </div>
+          <div className="w-11 h-11 rounded-full p-0.5 bg-gradient-to-tr from-amber-400 via-emerald-400 to-amber-500 shadow-xl shadow-emerald-500/20 group-hover:scale-105 transition-transform duration-300 flex items-center justify-center">
+            <img 
+              src="./dnyanx-logo.svg" 
+              alt="DnyanX Tech Official Emblem" 
+              className="w-full h-full object-contain rounded-full bg-slate-950 p-0.5"
+            />
           </div>
           <div>
             <div className="flex items-center gap-1 font-extrabold text-lg sm:text-xl tracking-tight">
-              <span className="text-white">DnyanX</span>
-              <span className="text-gradient">Tech</span>
-              <span className="text-xs">🌿</span>
+              <span className="text-white font-mono">DnyanX</span>
+              <span className="text-gradient font-bold">Tech</span>
             </div>
-            <p className="text-[9px] text-slate-400 font-mono tracking-widest uppercase">ONE HUMAN. GREEN FUTURE.</p>
+            <p className="text-[9px] text-amber-400/90 font-mono tracking-widest uppercase font-bold">ECO-FRIENDLY & FUTURE-READY</p>
           </div>
         </div>
 
@@ -153,7 +154,7 @@ export default function Navbar({
           </div>
         </nav>
 
-        {/* Controls: Language, Currency, Theme & Cart */}
+        {/* Controls: Language, Currency & Cart */}
         <div className="flex items-center gap-2">
           
           {/* Language Selector */}
