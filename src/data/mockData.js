@@ -175,53 +175,54 @@ export default function Header({ title, onBack }) {
       <Text className="text-lg font-bold text-white">{title}</Text>
     </View>
   );
-} me`
+}`
   }
 ];
 
 export const FREELANCE_SERVICES = [
   {
     id: "srv-1",
-    title: "Custom Full-Stack Web Application",
-    subtitle: "Turn your product idea into a high-performance web app.",
-    delivery: "2-4 Weeks",
-    startingPrice: "$1,499",
+    title: "Starter / Basic Package",
+    subtitle: "Ideal for small businesses, personal portfolios & MVPs.",
+    delivery: "3-7 Days",
+    startingPriceInr: 10000,
+    startingPrice: "$120",
     features: [
-      "Responsive React / Next.js Frontend",
-      "Robust Node.js / FastAPI Backend API",
-      "Database Design (PostgreSQL / MongoDB)",
-      "Authentication & Payment Integration (Stripe / Razorpay)",
-      "SEO Optimization & Speed Audit"
-    ],
-    popular: true
-  },
-  {
-    id: "srv-2",
-    title: "AI Agent & Workflow Integration",
-    subtitle: "Supercharge your business with custom LLM agents & automation.",
-    delivery: "1-2 Weeks",
-    startingPrice: "$999",
-    features: [
-      "Custom RAG & Vector Database Setup",
-      "OpenAI / Anthropic Claude API Integration",
-      "LangChain / LlamaIndex Workflow Pipelines",
-      "Automated Web Scraping & Data Ingestion",
-      "Custom Dashboard for AI Analytics"
+      "1 to 3 Speed-Optimized Pages (Next.js / React)",
+      "Mobile-Friendly & Modern UI/UX Design",
+      "Basic Contact Form & WhatsApp / Direct Call Button",
+      "Basic SEO Setup & Google Indexing"
     ],
     popular: false
   },
   {
-    id: "srv-3",
-    title: "UI/UX Redesign & Modernization",
-    subtitle: "Transform outdated software into modern, high-converting interfaces.",
+    id: "srv-2",
+    title: "Standard / Professional Package",
+    subtitle: "Recommended for growing startups & medium businesses.",
     delivery: "1-2 Weeks",
-    startingPrice: "$799",
+    startingPriceInr: 30000,
+    startingPrice: "$360",
     features: [
-      "Figma Prototype to Clean Code",
-      "Dark Mode & Glassmorphism Design System",
-      "Mobile-First Responsive Refactoring",
-      "Micro-animations & Interactive Elements",
-      "Lighthouse 95+ Performance Score Guarantee"
+      "All-in-One Dynamic Website or E-Commerce Storefront",
+      "Payment Gateway Integration (Razorpay / Stripe)",
+      "User Authentication & Signup System",
+      "Basic AI Chatbot & Automation Workflow",
+      "Admin Dashboard for Data Management"
+    ],
+    popular: true
+  },
+  {
+    id: "srv-3",
+    title: "Enterprise / Advanced Package",
+    subtitle: "For large agencies, custom AI systems & SaaS platforms.",
+    delivery: "3-5 Weeks",
+    startingPriceInr: 70000,
+    startingPrice: "$840",
+    features: [
+      "Custom SaaS Platform or Full-Stack AI Agent System",
+      "High Security Micro-services & DB Architecture",
+      "Custom RAG & Vector Database Pipeline",
+      "30 Days Post-Launch SLA Support & 99.9% Uptime Guarantee"
     ],
     popular: false
   }

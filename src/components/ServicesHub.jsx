@@ -1,35 +1,33 @@
 import React, { useState } from 'react';
 import { FREELANCE_SERVICES } from '../data/mockData';
-import { Calculator, CheckCircle2, Clock, Sparkles, Send, ShieldCheck, Zap, Layers, ExternalLink } from 'lucide-react';
+import { Calculator, CheckCircle2, Clock, Sparkles, Send, ShieldCheck, Zap, ExternalLink } from 'lucide-react';
+import { formatPrice } from '../utils/currencyEngine';
 
 export default function ServicesHub({ t, currency, onSelectService, onRequestEstimate }) {
-  const rate = currency === 'INR' ? 83.5 : 1.0;
-  const symbol = currency === 'INR' ? '₹' : '$';
-
-  const [projectType, setProjectType] = useState('web');
+  const [projectType, setProjectType] = useState('starter');
   const [scale, setScale] = useState('mvp');
   const [selectedAddons, setSelectedAddons] = useState(['auth', 'ai']);
 
   const projectTypes = [
-    { id: 'web', name: 'Web App / SaaS', basePrice: 1200, baseDays: 14 },
-    { id: 'ai', name: 'AI LLM Integration', basePrice: 900, baseDays: 10 },
-    { id: 'mobile', name: 'Mobile App (Expo)', basePrice: 1400, baseDays: 18 },
-    { id: 'ecommerce', name: 'E-Commerce Marketplace', basePrice: 1600, baseDays: 20 },
-    { id: 'redesign', name: 'UI/UX Redesign', basePrice: 700, baseDays: 7 }
+    { id: 'starter', name: 'Starter / Basic Web', baseInr: 15000, baseDays: 5 },
+    { id: 'standard', name: 'Standard E-Commerce', baseInr: 35000, baseDays: 10 },
+    { id: 'ai', name: 'AI LLM Agent System', baseInr: 45000, baseDays: 12 },
+    { id: 'enterprise', name: 'Custom SaaS Platform', baseInr: 75000, baseDays: 21 },
+    { id: 'redesign', name: 'UI/UX Modernization', baseInr: 20000, baseDays: 7 }
   ];
 
   const scales = [
-    { id: 'mvp', name: 'MVP / Startup', multiplier: 1.0, label: 'Fast release for validating ideas' },
-    { id: 'business', name: 'Business Growth', multiplier: 1.6, label: 'Comprehensive features & analytics' },
-    { id: 'enterprise', name: 'Enterprise Grade', multiplier: 2.5, label: 'Maximum security, SLAs & microservices' }
+    { id: 'mvp', name: 'Starter / MVP', multiplier: 1.0, label: 'Fast 3-7 day release for small business' },
+    { id: 'business', name: 'Standard Business', multiplier: 1.5, label: 'Full features, payments & dashboard' },
+    { id: 'enterprise', name: 'Advanced Enterprise', multiplier: 2.2, label: 'Custom AI agents, SLAs & microservices' }
   ];
 
   const addonsList = [
-    { id: 'auth', name: 'Authentication & Payments (Stripe/UPI)', price: 250, days: 3 },
-    { id: 'ai', name: 'Custom AI RAG / OpenAI Agents', price: 400, days: 4 },
-    { id: 'seo', name: 'SEO & Performance Optimization', price: 200, days: 2 },
-    { id: 'docker', name: 'CI/CD Pipeline & Docker setup', price: 300, days: 3 },
-    { id: 'support', name: '30 Days Post-Launch SLA Support', price: 250, days: 0 }
+    { id: 'auth', name: 'User Auth & Payments (Razorpay/Stripe)', inrPrice: 5000, days: 2 },
+    { id: 'ai', name: 'Custom AI Chatbot & RAG Workflow', inrPrice: 12000, days: 4 },
+    { id: 'seo', name: 'SEO & Speed Performance Audit', inrPrice: 3000, days: 1 },
+    { id: 'docker', name: 'CI/CD Pipeline & Docker setup', inrPrice: 8000, days: 2 },
+    { id: 'support', name: '30 Days Post-Launch SLA Support', inrPrice: 5000, days: 0 }
   ];
 
   const toggleAddon = (id) => {
@@ -43,16 +41,16 @@ export default function ServicesHub({ t, currency, onSelectService, onRequestEst
   const currentType = projectTypes.find((t) => t.id === projectType);
   const currentScale = scales.find((s) => s.id === scale);
 
-  const baseCalculatedPrice = currentType.basePrice * currentScale.multiplier;
-  const addonsPrice = selectedAddons.reduce((acc, currId) => {
+  const baseCalculatedInr = currentType.baseInr * currentScale.multiplier;
+  const addonsInr = selectedAddons.reduce((acc, currId) => {
     const item = addonsList.find((a) => a.id === currId);
-    return acc + (item ? item.price : 0);
+    return acc + (item ? item.inrPrice : 0);
   }, 0);
 
-  const totalPriceUsd = baseCalculatedPrice + addonsPrice;
-  const totalPriceDisplay = Math.round(totalPriceUsd * rate);
+  const totalInr = baseCalculatedInr + addonsInr;
+  const displayFormattedPrice = formatPrice(totalInr, currency);
 
-  const baseCalculatedDays = currentType.baseDays * (scale === 'enterprise' ? 1.8 : scale === 'business' ? 1.3 : 1.0);
+  const baseCalculatedDays = currentType.baseDays * (scale === 'enterprise' ? 1.5 : scale === 'business' ? 1.2 : 1.0);
   const addonsDays = selectedAddons.reduce((acc, currId) => {
     const item = addonsList.find((a) => a.id === currId);
     return acc + (item ? item.days : 0);
@@ -64,7 +62,7 @@ export default function ServicesHub({ t, currency, onSelectService, onRequestEst
     onRequestEstimate({
       projectType: currentType.name,
       scale: currentScale.name,
-      estimatedPrice: `${symbol}${totalPriceDisplay} ${currency}`,
+      estimatedPrice: `${displayFormattedPrice} (${currency})`,
       estimatedTimeline: `${totalDays} Days`,
       addons: selectedAddons.map(id => addonsList.find(a => a.id === id).name)
     });
@@ -77,16 +75,16 @@ export default function ServicesHub({ t, currency, onSelectService, onRequestEst
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="tag-badge mb-3">
-            <Sparkles size={12} /> Freelancing & Custom Engineering
+            <Sparkles size={12} /> Flexible Pricing Tiers
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
-            Services & <span className="text-gradient">Interactive Cost Estimator</span>
+            Services & <span className="text-gradient">Flexible Cost Estimator</span>
           </h2>
           <p className="text-slate-400 text-sm sm:text-base mb-4">
-            Hire DnyanX Tech engineers for custom development or calculate an instant transparent price quote for your next digital product.
+            Transparent, budget-friendly packages designed for small businesses, growing startups, and enterprise platforms.
           </p>
 
-          {/* Fiverr / External Freelance Links */}
+          {/* External Freelance Agency Profiles */}
           <div className="flex items-center justify-center gap-3">
             <a
               href="https://fiverr.com"
@@ -94,7 +92,7 @@ export default function ServicesHub({ t, currency, onSelectService, onRequestEst
               rel="noreferrer"
               className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-semibold text-emerald-400 hover:border-emerald-500/40 flex items-center gap-1.5 transition-all"
             >
-              <span>Fiverr Direct Profile</span> <ExternalLink size={12} />
+              <span>Fiverr Profile</span> <ExternalLink size={12} />
             </a>
             <a
               href="https://upwork.com"
@@ -107,11 +105,10 @@ export default function ServicesHub({ t, currency, onSelectService, onRequestEst
           </div>
         </div>
 
-        {/* Services Cards */}
+        {/* Services Cards - Revised Budget Tiers */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
           {FREELANCE_SERVICES.map((srv) => {
-            const rawPriceUsd = parseInt(srv.startingPrice.replace(/[^0-9]/g, '')) || 999;
-            const convertedPrice = Math.round(rawPriceUsd * rate);
+            const displayPrice = formatPrice(srv.startingPriceInr, currency);
 
             return (
               <div
@@ -133,7 +130,7 @@ export default function ServicesHub({ t, currency, onSelectService, onRequestEst
                   </div>
 
                   <div className="flex items-baseline gap-2 mb-6 font-mono">
-                    <span className="text-3xl font-extrabold text-white">{symbol}{convertedPrice}</span>
+                    <span className="text-3xl font-extrabold text-white">{displayPrice}</span>
                     <span className="text-xs text-slate-400 font-sans">starting quote</span>
                   </div>
 
@@ -158,7 +155,7 @@ export default function ServicesHub({ t, currency, onSelectService, onRequestEst
                     srv.popular ? 'emerald-glow-btn' : 'bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700'
                   }`}
                 >
-                  {t ? t.bookPackage : "Book Package"}
+                  {t ? t.bookPackage || "Book Package" : "Book Package"}
                 </button>
 
               </div>
@@ -175,8 +172,8 @@ export default function ServicesHub({ t, currency, onSelectService, onRequestEst
               <Calculator size={24} />
             </div>
             <div>
-              <h3 className="text-2xl font-extrabold text-white">Interactive Project Price & Timeline Estimator</h3>
-              <p className="text-xs text-slate-400 font-mono">Select your project parameters for instant estimated pricing</p>
+              <h3 className="text-2xl font-extrabold text-white">Interactive Project Cost Estimator</h3>
+              <p className="text-xs text-slate-400 font-mono">Starter Base Price: {formatPrice(15000, currency)} (Flexible Addons)</p>
             </div>
           </div>
 
@@ -186,7 +183,7 @@ export default function ServicesHub({ t, currency, onSelectService, onRequestEst
               
               <div>
                 <label className="block text-xs font-mono uppercase tracking-wider text-slate-400 mb-3">
-                  1. Select Project Type
+                  1. Select Project Scope
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                   {projectTypes.map((pt) => (
@@ -234,7 +231,7 @@ export default function ServicesHub({ t, currency, onSelectService, onRequestEst
                 <div className="space-y-2">
                   {addonsList.map((a) => {
                     const isChecked = selectedAddons.includes(a.id);
-                    const addonDisplayPrice = Math.round(a.price * rate);
+                    const addonDisplayPrice = formatPrice(a.inrPrice, currency);
                     return (
                       <div
                         key={a.id}
@@ -254,7 +251,7 @@ export default function ServicesHub({ t, currency, onSelectService, onRequestEst
                           />
                           <span>{a.name}</span>
                         </div>
-                        <span className="text-xs font-mono text-emerald-400 font-bold">+{symbol}{addonDisplayPrice}</span>
+                        <span className="text-xs font-mono text-emerald-400 font-bold">+{addonDisplayPrice}</span>
                       </div>
                     );
                   })}
@@ -266,12 +263,12 @@ export default function ServicesHub({ t, currency, onSelectService, onRequestEst
             <div className="glass-panel p-6 border-slate-800 bg-slate-950 flex flex-col justify-between h-full">
               <div>
                 <h4 className="text-sm font-bold text-white mb-4 border-b border-slate-800 pb-3 flex items-center gap-2">
-                  <Zap size={16} className="text-emerald-400" /> Estimated Summary
+                  <Zap size={16} className="text-emerald-400" /> Instant Estimate Summary
                 </h4>
 
                 <div className="space-y-3 text-xs mb-6">
                   <div className="flex justify-between text-slate-400">
-                    <span>Selected Type:</span>
+                    <span>Selected Scope:</span>
                     <span className="text-white font-semibold">{currentType.name}</span>
                   </div>
                   <div className="flex justify-between text-slate-400">
@@ -287,7 +284,7 @@ export default function ServicesHub({ t, currency, onSelectService, onRequestEst
                 <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 mb-6">
                   <div className="text-xs text-slate-400 mb-1">Estimated Investment</div>
                   <div className="text-3xl font-extrabold font-mono text-white text-emerald-glow mb-2">
-                    {symbol}{totalPriceDisplay} {currency}
+                    {displayFormattedPrice}
                   </div>
                   <div className="text-xs text-slate-400 flex items-center gap-1.5 font-mono">
                     <Clock size={13} className="text-cyan-400" />
@@ -300,7 +297,7 @@ export default function ServicesHub({ t, currency, onSelectService, onRequestEst
                 onClick={handleApplyEstimate}
                 className="w-full emerald-glow-btn py-3.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-xl"
               >
-                <Send size={14} /> {t ? t.requestEstimate : "Request Quote with Estimate"}
+                <Send size={14} /> {t ? t.requestEstimate || "Request Custom Quote" : "Request Custom Quote"}
               </button>
             </div>
 
