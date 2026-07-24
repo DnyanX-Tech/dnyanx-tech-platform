@@ -1,0 +1,293 @@
+import React, { useState } from 'react';
+import { FREELANCE_SERVICES } from '../data/mockData';
+import { Calculator, CheckCircle2, Clock, Sparkles, Send, ShieldCheck, Zap, Layers } from 'lucide-react';
+
+export default function ServicesHub({ onSelectService, onRequestEstimate }) {
+  // Calculator State
+  const [projectType, setProjectType] = useState('web');
+  const [scale, setScale] = useState('mvp');
+  const [selectedAddons, setSelectedAddons] = useState(['auth', 'ai']);
+
+  const projectTypes = [
+    { id: 'web', name: 'Web App / SaaS', basePrice: 1200, baseDays: 14 },
+    { id: 'ai', name: 'AI LLM Integration', basePrice: 900, baseDays: 10 },
+    { id: 'mobile', name: 'Mobile App (Expo)', basePrice: 1400, baseDays: 18 },
+    { id: 'ecommerce', name: 'E-Commerce Marketplace', basePrice: 1600, baseDays: 20 },
+    { id: 'redesign', name: 'UI/UX Redesign', basePrice: 700, baseDays: 7 }
+  ];
+
+  const scales = [
+    { id: 'mvp', name: 'MVP / Startup', multiplier: 1.0, label: 'Fast release for validating ideas' },
+    { id: 'business', name: 'Business Growth', multiplier: 1.6, label: 'Comprehensive features & analytics' },
+    { id: 'enterprise', name: 'Enterprise Grade', multiplier: 2.5, label: 'Maximum security, SLAs & microservices' }
+  ];
+
+  const addonsList = [
+    { id: 'auth', name: 'Authentication & Payments (Stripe)', price: 250, days: 3 },
+    { id: 'ai', name: 'Custom AI RAG / OpenAI Agents', price: 400, days: 4 },
+    { id: 'seo', name: 'SEO & Performance Optimization', price: 200, days: 2 },
+    { id: 'docker', name: 'CI/CD Pipeline & Docker setup', price: 300, days: 3 },
+    { id: 'support', name: '30 Days Post-Launch SLA Support', price: 250, days: 0 }
+  ];
+
+  const toggleAddon = (id) => {
+    if (selectedAddons.includes(id)) {
+      setSelectedAddons(selectedAddons.filter((a) => a !== id));
+    } else {
+      setSelectedAddons([...selectedAddons, id]);
+    }
+  };
+
+  // Calculate totals
+  const currentType = projectTypes.find((t) => t.id === projectType);
+  const currentScale = scales.find((s) => s.id === scale);
+
+  const baseCalculatedPrice = currentType.basePrice * currentScale.multiplier;
+  const addonsPrice = selectedAddons.reduce((acc, currId) => {
+    const item = addonsList.find((a) => a.id === currId);
+    return acc + (item ? item.price : 0);
+  }, 0);
+
+  const totalPrice = Math.round(baseCalculatedPrice + addonsPrice);
+
+  const baseCalculatedDays = currentType.baseDays * (scale === 'enterprise' ? 1.8 : scale === 'business' ? 1.3 : 1.0);
+  const addonsDays = selectedAddons.reduce((acc, currId) => {
+    const item = addonsList.find((a) => a.id === currId);
+    return acc + (item ? item.days : 0);
+  }, 0);
+
+  const totalDays = Math.round(baseCalculatedDays + addonsDays);
+
+  const handleApplyEstimate = () => {
+    onRequestEstimate({
+      projectType: currentType.name,
+      scale: currentScale.name,
+      estimatedPrice: `$${totalPrice}`,
+      estimatedTimeline: `${totalDays} Days`,
+      addons: selectedAddons.map(id => addonsList.find(a => a.id === id).name)
+    });
+  };
+
+  return (
+    <section id="services" className="py-20 relative border-t border-slate-800/80 bg-slate-950">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <span className="tag-badge mb-3">
+            <Sparkles size={12} /> Freelancing & Custom Engineering
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
+            Services & <span className="text-gradient">Interactive Cost Estimator</span>
+          </h2>
+          <p className="text-slate-400 text-sm sm:text-base">
+            Hire DnyanX Tech engineers for custom development or calculate an instant transparent price quote for your next digital product.
+          </p>
+        </div>
+
+        {/* Services Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+          {FREELANCE_SERVICES.map((srv) => (
+            <div
+              key={srv.id}
+              className={`glass-panel p-6 border-slate-800 flex flex-col justify-between relative transition-all duration-300 ${
+                srv.popular ? 'border-emerald-500/50 shadow-xl shadow-emerald-500/10' : 'hover:border-slate-700'
+              }`}
+            >
+              {srv.popular && (
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-emerald-500 text-slate-950 font-extrabold text-[11px] uppercase tracking-wider shadow-md">
+                  Most Popular Choice
+                </div>
+              )}
+
+              <div>
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold text-white mb-1">{srv.title}</h3>
+                  <p className="text-xs text-slate-400">{srv.subtitle}</p>
+                </div>
+
+                <div className="flex items-baseline gap-2 mb-6 font-mono">
+                  <span className="text-3xl font-extrabold text-white">{srv.startingPrice}</span>
+                  <span className="text-xs text-slate-400 font-sans">starting quote</span>
+                </div>
+
+                <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-300 flex items-center gap-2 mb-6">
+                  <Clock size={14} className="text-emerald-400" />
+                  <span>Est. Delivery: <strong>{srv.delivery}</strong></span>
+                </div>
+
+                {/* Features List */}
+                <div className="space-y-2.5 mb-8">
+                  {srv.features.map((feat, idx) => (
+                    <div key={idx} className="flex items-start gap-2.5 text-xs text-slate-300">
+                      <CheckCircle2 size={15} className="text-emerald-400 shrink-0 mt-0.5" />
+                      <span>{feat}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <button
+                onClick={() => onSelectService(srv)}
+                className={`w-full py-3 rounded-xl text-xs font-bold transition-all ${
+                  srv.popular ? 'emerald-glow-btn' : 'bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700'
+                }`}
+              >
+                Book Service Package
+              </button>
+
+            </div>
+          ))}
+        </div>
+
+        {/* Interactive Estimator Tool */}
+        <div className="glass-panel p-6 sm:p-10 border-slate-800 bg-slate-900/90 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="flex items-center gap-3 mb-8">
+            <div className="p-3 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <Calculator size={24} />
+            </div>
+            <div>
+              <h3 className="text-2xl font-extrabold text-white">Interactive Project Price & Timeline Estimator</h3>
+              <p className="text-xs text-slate-400 font-mono">Select your project parameters for instant estimated pricing</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            {/* Options Panel (2 columns) */}
+            <div className="lg:col-span-2 space-y-6">
+              
+              {/* Step 1: Project Type */}
+              <div>
+                <label className="block text-xs font-mono uppercase tracking-wider text-slate-400 mb-3">
+                  1. Select Project Type
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                  {projectTypes.map((t) => (
+                    <button
+                      key={t.id}
+                      onClick={() => setProjectType(t.id)}
+                      className={`p-3 rounded-xl text-xs font-semibold border text-left transition-all ${
+                        projectType === t.id
+                          ? 'bg-emerald-500/20 border-emerald-500 text-emerald-300 font-bold'
+                          : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'
+                      }`}
+                    >
+                      {t.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Step 2: Scope / Scale */}
+              <div>
+                <label className="block text-xs font-mono uppercase tracking-wider text-slate-400 mb-3">
+                  2. Select Project Scale
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {scales.map((s) => (
+                    <button
+                      key={s.id}
+                      onClick={() => setScale(s.id)}
+                      className={`p-3.5 rounded-xl border text-left transition-all ${
+                        scale === s.id
+                          ? 'bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold'
+                          : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'
+                      }`}
+                    >
+                      <div className="text-xs font-bold mb-1">{s.name}</div>
+                      <div className="text-[11px] text-slate-400 font-normal">{s.label}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Step 3: Addons */}
+              <div>
+                <label className="block text-xs font-mono uppercase tracking-wider text-slate-400 mb-3">
+                  3. Select Additional Modules & Addons
+                </label>
+                <div className="space-y-2">
+                  {addonsList.map((a) => {
+                    const isChecked = selectedAddons.includes(a.id);
+                    return (
+                      <div
+                        key={a.id}
+                        onClick={() => toggleAddon(a.id)}
+                        className={`p-3 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
+                          isChecked
+                            ? 'bg-slate-900 border-emerald-500/60 text-slate-200'
+                            : 'bg-slate-950/60 border-slate-800 text-slate-400 hover:border-slate-700'
+                        }`}
+                      >
+                        <div className="flex items-center gap-3 text-xs">
+                          <input
+                            type="checkbox"
+                            checked={isChecked}
+                            onChange={() => {}}
+                            className="rounded accent-emerald-500"
+                          />
+                          <span>{a.name}</span>
+                        </div>
+                        <span className="text-xs font-mono text-emerald-400 font-bold">+${a.price}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+            </div>
+
+            {/* Live Summary Card */}
+            <div className="glass-panel p-6 border-slate-800 bg-slate-950 flex flex-col justify-between h-full">
+              <div>
+                <h4 className="text-sm font-bold text-white mb-4 border-b border-slate-800 pb-3 flex items-center gap-2">
+                  <Zap size={16} className="text-emerald-400" /> Estimated Summary
+                </h4>
+
+                <div className="space-y-3 text-xs mb-6">
+                  <div className="flex justify-between text-slate-400">
+                    <span>Selected Type:</span>
+                    <span className="text-white font-semibold">{currentType.name}</span>
+                  </div>
+                  <div className="flex justify-between text-slate-400">
+                    <span>Project Scale:</span>
+                    <span className="text-cyan-400 font-semibold">{currentScale.name}</span>
+                  </div>
+                  <div className="flex justify-between text-slate-400">
+                    <span>Selected Addons:</span>
+                    <span className="text-emerald-400 font-semibold">{selectedAddons.length} Modules</span>
+                  </div>
+                </div>
+
+                {/* Estimate totals */}
+                <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 mb-6">
+                  <div className="text-xs text-slate-400 mb-1">Estimated Investment</div>
+                  <div className="text-3xl font-extrabold font-mono text-white text-emerald-glow mb-2">
+                    ${totalPrice} USD
+                  </div>
+                  <div className="text-xs text-slate-400 flex items-center gap-1.5 font-mono">
+                    <Clock size={13} className="text-cyan-400" />
+                    <span>Estimated Completion: <strong>~{totalDays} Days</strong></span>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                onClick={handleApplyEstimate}
+                className="w-full emerald-glow-btn py-3.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-xl"
+              >
+                <Send size={14} /> Request Quote with Estimate
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  );
+}
